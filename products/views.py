@@ -9,18 +9,26 @@ def home(request):
 class ProductsListView(views.ListView):
     model = Products
     template_name = 'products/products.html'
-    paginate_by = 20
+    paginate_by = 6
 
     def get_queryset(self):
         self.category = self.kwargs['category']
-        return super().get_queryset()
+        queryset =  Products.objects.filter(category=self.category).order_by('date_created')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         products = Products.objects.filter(category=self.category).order_by('date_created')
-        # context['object_list'] = products
-        context['total_results'] = products.count
+        total_results = products.count()
+        context['total_results'] = total_results
+        context['pagination_number'] = self.paginate_by
+        context['page_start_index'] = int(self.page_at) * self.paginate_by - self.paginate_by + 1
+        context['page_end_index'] = int(self.page_at) * self.paginate_by if int(self.page_at) * self.paginate_by < total_results else total_results
         return context
+
+    def get(self, request, *args, **kwargs):
+        self.page_at = request.GET.get('page', 1)
+        return super().get(request, *args, **kwargs)
 
 class SingleProductView(views.ListView):
     model = Products

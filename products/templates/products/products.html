@@ -109,7 +109,7 @@
 
         <div class="products-right-wrapper">
             <h3>Gaming</h3>
-            <div class="total-results">1-12 of {{total_results}} total results for <span>Gaming</span></div>
+            <div class="total-results">{{page_start_index}}-{{page_end_index}} of {{total_results}} total results for <span>Gaming</span></div>
             <div class="products-right">
                 
                 {% for product in object_list %}
@@ -140,13 +140,17 @@
 
                     <li><a href="?page=1" id="page-btn">1</a></li>
 
-                    {% if page_obj.has_previous %}
+                    {% if page_obj.has_previous and page_obj.previous_page_number != 1 %}
                         
                         <li><a href="?page={{page_obj.previous_page_number}}" id="page-btn">{{page_obj.previous_page_number}}</a></li>
 
                     {% endif %}
 
-                    {% if page_obj.has_next %}
+                    {% if page_obj.has_previous and page_obj.has_next %}
+                        <li><a href="?page={{page_obj.number}}" id="page-btn">{{page_obj.number}}</a></li>
+                    {% endif %}
+
+                    {% if page_obj.has_next and page_obj.next_page_number != page_obj.paginator.num_pages %}
 
                         <li><a href="?page={{page_obj.next_page_number}}" id="page-btn">{{page_obj.next_page_number}}</a></li>
 
@@ -155,11 +159,7 @@
                     <li><a href="?page={{page_obj.paginator.num_pages}}" id="page-btn">{{page_obj.paginator.num_pages}}</a></li>
 
 
-                    {% comment %} <li><a href="" style="pointer-events: none;">...</a></li>
-
-                    <li><a href="" id="page-btn{{page}}">{{page}}</a></li>
-
-                    <li><a href="" id="page-btn{{page}}">{{page}}</a></li> {% endcomment %}
+                    {% comment %} <li><a href="" style="pointer-events: none;">...</a></li> {% endcomment %}
 
                 </ul>
             </div>
