@@ -1,0 +1,100 @@
+{% extends 'main.html' %}
+    
+    {% load static %}
+    
+
+    {% block content %}
+    
+    <main class="home-page-wrapper">
+        <section class="home-menu-wrapper">
+            <h3>Categories</h3>
+            <ul class="home-menu">
+                <li><a href="">Newest</a></li>
+                <li><a href="">On sale</a></li>
+                <li><a href="">Hot</a></li>
+            </ul>
+        </section>
+        <section class="add">
+            <div>
+                <ul class="all-cat">
+                    <li><a href="{% url 'products' "gaming" %}">Gaming</a></li>
+                    <li><a href="{% url 'products' "toys" %}">Toys</a></li>
+                    <li><a href="{% url 'products' "books" %}">Books</a></li>
+                    <li><a href="{% url 'products' "music" %}">Music</a></li>
+                    <li><a href="{% url 'products' "clothes" %}">Clothes</a></li>
+                    <li><a href="{% url 'products' "pc_laptops" %}">PC/Laptops</a></li>
+                    <li><a href="{% url 'products' "phones" %}">Mobile phones</a></li>
+                    <li><a href="{% url 'products' "tv_monitors" %}">TV/Monitors</a></li>
+                </ul>
+            </div>
+            <div class="slider">
+                <div class="item"><a href=""><img src="https://i.ytimg.com/vi/dip_8dmrcaU/maxresdefault.jpg" alt=""></a></div>
+                <div class="item"><a href=""><img src="https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg" alt=""></a></div>
+            </div>
+        </section>
+        <section>
+            <ul class="survice-info">
+                <li>30 days return</li>
+                <li>Fast delivery</li>
+                <li>24/7 online survices</li>
+                <li>Montly payments</li>
+            </ul>
+        </section>
+        <section>
+            <div class="big-adds">
+                <div class="big-adds-img"><a href=""><img src="https://cdn.ozone.bg/media/description/o/s/os_mid_mid_new_940x440_play_it_smart_new_0622_9933.jpg" alt=""></a></div>
+                <div class="big-adds-img"><a href=""><img src="https://cdn.ozone.bg/media/description/p/s/ps5_complekt_os_mid_mid_new_0522_5545.jpg" alt=""></a></div>
+                <div class="big-adds-img"><a href=""><img src="https://cdn.ozone.bg/media/description/o/s/os_mid_mid_educa_promo_0622_6086.jpg" alt=""></a></div>
+                <div class="big-adds-img"><a href=""><img src="https://cdn.ozone.bg/media/description/e/_/e_knigi_mid_mid_1121_1_2305.jpg" alt=""></a></div>
+            </div>
+        </section>
+        <section>
+            <div class="add-single-product">
+                <div class="add-single-product-menu">
+                    <h3>RAZER PRODUCT</h3>
+                    <ul>
+                        <li><a href=""><span>></span> Razer Blade</a></li>
+                        <li><a href=""><span>></span> Razer Viper</a></li>
+                        <li><a href=""><span>></span> Mouses</a></li>
+                        <li><a href=""><span>></span> Keyboards</a></li>
+                        <li><a href=""><span>></span> Headphones</a></li>
+                        <li><a href=""><span>></span> Mouse Pads</a></li>
+                    </ul>
+                </div>
+                <div class="add-single-product-img">
+                    <div class="item1"><a href=""><img src="https://cdn.ozone.bg/media/description/o/s/os_widget_big_445x536_04_razer_6630.jpg" alt=""></a></div>
+                    <div class="item2"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Pafi/OS_Widget_Mid_354_268_01_new.jpg" alt=""></a></div>
+                    <div class="item3"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mouse_2.jpg" alt=""></a></div>
+                    <div class="item4"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/keyboard_2.jpg" alt=""></a></div>
+                    <div class="item5"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/headphones_2.jpg" alt=""></a></div>
+                    <div class="item6"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mousepad_2.jpg" alt=""></a></div>
+                </div>
+            </div>
+            <div class="add-single-product">
+                <div class="add-single-product-menu">
+                    <h3>RAZER PRODUCT</h3>
+                    <ul>
+                        <li><a href=""><span>></span> Razer Blade</a></li>
+                        <li><a href=""><span>></span> Razer Viper</a></li>
+                        <li><a href=""><span>></span> Mouses</a></li>
+                        <li><a href=""><span>></span> Keyboards</a></li>
+                        <li><a href=""><span>></span> Headphones</a></li>
+                        <li><a href=""><span>></span> Mouse Pads</a></li>
+                    </ul>
+                </div>
+                <div class="add-single-product-img">
+                    <div class="item1"><a href=""><img src="https://cdn.ozone.bg/media/description/o/s/os_widget_big_445x536_04_razer_6630.jpg" alt=""></a></div>
+                    <div class="item2"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Pafi/OS_Widget_Mid_354_268_01_new.jpg" alt=""></a></div>
+                    <div class="item3"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mouse_2.jpg" alt=""></a></div>
+                    <div class="item4"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/keyboard_2.jpg" alt=""></a></div>
+                    <div class="item5"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/headphones_2.jpg" alt=""></a></div>
+                    <div class="item6"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mousepad_2.jpg" alt=""></a></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="{% static 'js/slider.js' %}"></script>
+    {% endblock content %}

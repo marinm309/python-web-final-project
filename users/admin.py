@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import AppUser
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
+from . models import Customer
 
 
 UserModel = get_user_model()
@@ -27,3 +27,6 @@ class AppUserAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
+
+
+admin.site.register(Customer)

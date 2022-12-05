@@ -1,0 +1,142 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="products-wrapper">
+
+        <div class="products-left">
+            {% comment %} <div class="brands checkbox-filter">
+                <p class="filter-label">Brands</p>
+                <ul>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">Xbox</label>
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">Nintendo</label>
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">PlayStation</label>
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">Logitech G</label>
+                    </li>
+                </ul>
+            </div> {% endcomment %}
+
+            <div class="price checkbox-filter">
+                <p class="filter-label">Price</p>
+                <ul>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">-$100</label>
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">-$200</label>
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">-$300</label>
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">-$400</label>
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">-$500</label>
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">$500+</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="rating checkbox-filter">
+                <p class="filter-label">Avg. Customer Review</p>
+                <ul>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </label> & Up
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </label> & Up
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </label> & Up
+                    </li>
+                    <li class="checkbox-filter-li">
+                        <input type="checkbox">
+                        <label for="">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </label> & Up
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="products-right-wrapper">
+            <h3>Gaming</h3>
+            <div class="total-results">1-12 of over 50,000 results for <span>Gaming</span></div>
+            <div class="products-right">
+                
+                {% for product in object_list %}
+                <div class="single-product">
+                    <a href=""><img src="{{product.img.url}}" alt=""></a>
+                    <div class="single-product-info">
+                        <a href=""><p class="single-product-name">{{product.name}}</p></a>
+                        {% if product.producer %}
+                        <p class="producer">By {{product.producer}}</p>
+                        {% endif %}
+                        <div class="single-product-rating">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star-half-stroke"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <p class="total-votes"> 17,856</p>
+                        </div>
+                        <p class="single-product-price">${{product.price}}</p>
+                        {% comment %} <a href="" class="platform">Nintendo</a> {% endcomment %}
+                    </div>
+                </div>
+                {% endfor %}
+    
+            </div>
+        </div>
+
+    </div>
+
+    {% endblock content %}

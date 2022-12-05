@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    
+
+</head>
+<body>
+    
+    <nav>
+        <div class="logo">
+            <h1><a href="">Ecommerce</a></h1>
+        </div>
+        <div class="search">
+            <form action="" method="GET" id="search-form">
+                <input type="text" id="search-field" placeholder="Search...">
+                <input type="submit" value="&#xf002;">
+            </form>
+        </div>
+        <div class="cart-login">
+            <ul>
+                <li style="font-size: 20px;"><a href="">Sign in</a></li>
+                <li>
+                    <a href="">
+                        <div class="cart">
+                            <p><b>3</b></p>
+                            <i class="fa fa-shopping-cart" style="font-size:24px;"></i>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <footer>
+        <div class="footer-nav-wrapper">
+            <div>
+                <h3>ECOMMERCE</h3>
+                <ul>
+                    <li><a href="">About us</a></li>
+                    <li><a href="">How to buy</a></li>
+                    <li><a href="">Delivery</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>CONTACT/SUPPORT</h3>
+                <ul>
+                    <li><a href="">Help</a></li>
+                    <li><a href="">Contacts</a></li>
+                    <li><a href="">Terms And Conditions</a></li>
+                    <li><a href="">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>SOCIAL MEDIAS</h3>
+                <ul class="social-media">
+                    <li><a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>PAYMENT METHODS</h3>
+                <ul>
+                    <li>Cash</li>
+                    <li>Card
+                        <ul class="payment-img">
+                            <li><img src="MasterCard_early_1990s_logo.png" alt=""></li>
+                            <li><img src="1200px-Visa.svg.png" alt=""></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/searchBar.js' %}"></script>
+</body>
+</html>
