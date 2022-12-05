@@ -734,7 +734,7 @@ footer{
 .single-product{
     background-color: white;
     border-radius: 10px;
-    width: 18%;
+    width: 23%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -943,6 +943,7 @@ footer{
 .single-product-wrapper{
     width: 70%;
     margin: 0 auto;
+    padding-top: 50px;
 }
 
 .single-product-main-wrapper{
@@ -954,8 +955,15 @@ footer{
     width: 40%;
 }
 
+.main-img{
+    width: 360px;
+    height: 260px;
+}
+
 .single-product-photos .main-img img{
     width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .single-product-fast-order form input{
@@ -1014,13 +1022,16 @@ footer{
 
 .sub-img{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    gap: 5px;
     margin-top: 10px;
 }
 
 .sub-img img{
     opacity: 0.6;
     transition-duration: 0.2s;
+    padding: 10px;
+    object-fit: contain;
 }
 
 .sub-img img:hover{
@@ -1086,4 +1097,60 @@ footer{
     .single-product-details{
         width: 100%;
     }
+}
+
+@media only screen and (max-width: 500px){
+    .main-img{
+        width: 100%;
+    }
+
+    .sub-img img{
+        padding: 2px;
+    }
+}
+
+.pages-wrapper-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.pages-wrapper{
+    display: flex;
+    gap: 15px;
+    padding: 0;
+}
+
+.pages-wrapper a{
+    color: black;
+    background-color: white;
+    border: 2px solid #ce8806;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    transition-duration: 0.2s;
+}
+
+.pages-wrapper a:hover{
+    background-color: #ffa60088;
+}
+
+.pages-wrapper li{
+    width: 50px;
+    height: 50px;
+}
+
+.checkbox-filter-li a{
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.checkbox-filter-li label, input{
+    cursor: pointer;
 }

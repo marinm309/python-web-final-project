@@ -109,14 +109,14 @@
 
         <div class="products-right-wrapper">
             <h3>Gaming</h3>
-            <div class="total-results">1-12 of over 50,000 results for <span>Gaming</span></div>
+            <div class="total-results">1-12 of {{total_results}} total results for <span>Gaming</span></div>
             <div class="products-right">
                 
                 {% for product in object_list %}
                 <div class="single-product">
-                    <a href=""><img src="{{product.img.url}}" alt=""></a>
+                    <a href="{% url 'single-product' product.category product.pk %}"><img src="{{product.img.url}}" alt=""></a>
                     <div class="single-product-info">
-                        <a href=""><p class="single-product-name">{{product.name}}</p></a>
+                        <a href="{% url 'single-product' product.category product.pk %}"><p class="single-product-name">{{product.name}}</p></a>
                         {% if product.producer %}
                         <p class="producer">By {{product.producer}}</p>
                         {% endif %}
@@ -135,7 +135,36 @@
                 {% endfor %}
     
             </div>
+            <div class="pages-wrapper-main">
+                <ul class="pages-wrapper">
+
+                    <li><a href="?page=1" id="page-btn">1</a></li>
+
+                    {% if page_obj.has_previous %}
+                        
+                        <li><a href="?page={{page_obj.previous_page_number}}" id="page-btn">{{page_obj.previous_page_number}}</a></li>
+
+                    {% endif %}
+
+                    {% if page_obj.has_next %}
+
+                        <li><a href="?page={{page_obj.next_page_number}}" id="page-btn">{{page_obj.next_page_number}}</a></li>
+
+                    {% endif %}
+
+                    <li><a href="?page={{page_obj.paginator.num_pages}}" id="page-btn">{{page_obj.paginator.num_pages}}</a></li>
+
+
+                    {% comment %} <li><a href="" style="pointer-events: none;">...</a></li>
+
+                    <li><a href="" id="page-btn{{page}}">{{page}}</a></li>
+
+                    <li><a href="" id="page-btn{{page}}">{{page}}</a></li> {% endcomment %}
+
+                </ul>
+            </div>
         </div>
+
 
     </div>
 

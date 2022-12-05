@@ -22,6 +22,11 @@ class Products(models.Model):
     description = models.TextField(null=False, blank=False)
     price = models.FloatField(null=False, blank=False)
     img = models.ImageField(upload_to='products', null=False, blank=False)
+    sub_img1 = models.ImageField(upload_to='products', null=True, blank=True)
+    sub_img2 = models.ImageField(upload_to='products', null=True, blank=True)
+    sub_img3 = models.ImageField(upload_to='products', null=True, blank=True)
+    sub_img4 = models.ImageField(upload_to='products', null=True, blank=True)
+    sub_img5 = models.ImageField(upload_to='products', null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

@@ -1,0 +1,116 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="single-product-main-wrapper">
+        <div class="single-product-wrapper">
+
+            <div class="single-product-top">
+    
+                <div class="single-product-photos">
+                    <div class="main-img">
+                        <img id="single-product-main-img" src="{{product.img.url}}" alt="">
+                    </div>
+                    <div class="sub-img">
+                        
+                        {% if product.sub_img1 %}
+                            <img src="{{product.sub_img1.url}}" alt="">
+                        {% endif %}
+
+                        {% if product.sub_img2 %}
+                            <img src="{{product.sub_img2.url}}" alt="">
+                        {% endif %}
+
+                        {% if product.sub_img3 %}
+                            <img src="{{product.sub_img3.url}}" alt="">
+                        {% endif %}
+
+                        {% if product.sub_img4 %}
+                            <img src="{{product.sub_img4.url}}" alt="">
+                        {% endif %}
+
+                        {% if product.sub_img5 %}
+                            <img src="{{product.sub_img5.url}}" alt="">
+                        {% endif %}
+
+                    </div>
+                </div>
+    
+                <div class="single-product-details">
+                    <h2>{{ product.name }}</h2>
+                    {% if product.producer %}
+                    <p class="producer">By {{product.producer}}</p>
+                    {% endif %}
+                    <div class="single-product-rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-regular fa-star-half-stroke"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <p class="total-votes"> 17,856</p>
+                    </div>
+                    <p class="single-product-price">${{product.price}}</p>
+                    <a href="">Add to Cart</a>
+                    <p class="delivery">Delivery <span class="day">Wednesday</span> 31.08</p>
+                </div>
+    
+                <div class="single-product-fast-order">
+                    <form action="">
+                        <h3>Fast Order</h3>
+                        <label for="">First Name</label>
+                        <input type="text">
+                        <label for="">Last Name</label>
+                        <input type="text">
+                        <label for="">E-mail</label>
+                        <input type="text">
+                        <label for="">Phone Number</label>
+                        <input type="text">
+                        <input type="text" placeholder="Country">
+                        <input type="text" placeholder="City">
+                        <a href="">Order</a>
+                        <p class="delivery">Delivery <span class="day">Wednesday</span> 31.08</p>
+                    </form>
+                </div>
+    
+            </div>
+    
+            <div class="single-product-middle">
+                <h3>Product Info</h3>
+                <p>{{product.description}}</p>
+            </div>
+    
+            <div class="single-product-bottom">
+                <h3>Similar Products</h3>
+                <div class="single-product-similar">
+                    
+                    {% for p in same_cat_products %}
+                    <div class="single-product similar">
+                        <a href="{% url 'single-product' p.category p.pk %}"><img src="{{p.img.url}}" alt=""></a>
+                        <div class="single-product-info">
+                            <a href="{% url 'single-product' p.category p.pk %}"><p class="single-product-name">{{p.name}}</p></a>
+                            {% if p.producer %}
+                            <p class="producer">By {{p.producer}}</p>
+                            {% endif %}
+                            <div class="single-product-rating">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-regular fa-star-half-stroke"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <p class="total-votes"> 17,856</p>
+                            </div>
+                            <p class="single-product-price">${{p.price}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}                
+    
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+    <script src="{% static 'js/singleProductImageChange.js' %}"></script>
+ {% endblock content %}
