@@ -13,7 +13,7 @@ def home(request):
 class ProductsListView(views.ListView):
     model = Products
     template_name = 'products/products.html'
-    paginate_by = 6
+    paginate_by = PRODUCTS_PAGE_PAGINATION
 
     def get_queryset(self):
         self.category = self.kwargs['category']
@@ -52,9 +52,13 @@ class SingleProductView(views.ListView):
         context['same_cat_products'] = same_cat_products[:SINGLE_PRODUCT_SIMILAR_ITEAM_AMOUNT]
         return context
 
-def search(request, keyword):
-    if request.method == 'POST':
-        word = request.POST['search']
-        print(word)
-    context = {}
+def search(request):
+    word = request.POST['search']
+    page_at = request.GET.get('page', 1)
+    object_list = Products.objects.filter(name__contains=word)
+    total_results = len(object_list)
+    pagination_number = PRODUCTS_PAGE_PAGINATION
+    page_start_index = int(page_at) * PRODUCTS_PAGE_PAGINATION - PRODUCTS_PAGE_PAGINATION + 1
+    page_end_index = int(page_at) * PRODUCTS_PAGE_PAGINATION if int(page_at) * PRODUCTS_PAGE_PAGINATION < total_results else total_results
+    context = {'object_list': object_list, 'total_results': total_results, 'pagination_number': pagination_number, 'page_start_index': page_start_index, 'page_end_index': page_end_index}
     return render(request, 'products/products.html', context)
