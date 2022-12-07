@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
     
     {% load static %}
+    {% load replace_filter %}
     
 
     {% block content %}
@@ -17,14 +18,9 @@
         <section class="add">
             <div>
                 <ul class="all-cat">
-                    <li><a href="{% url 'products' "gaming" %}">Gaming</a></li>
-                    <li><a href="{% url 'products' "toys" %}">Toys</a></li>
-                    <li><a href="{% url 'products' "books" %}">Books</a></li>
-                    <li><a href="{% url 'products' "music" %}">Music</a></li>
-                    <li><a href="{% url 'products' "clothes" %}">Clothes</a></li>
-                    <li><a href="{% url 'products' "pc_laptops" %}">PC/Laptops</a></li>
-                    <li><a href="{% url 'products' "phones" %}">Mobile phones</a></li>
-                    <li><a href="{% url 'products' "tv_monitors" %}">TV/Monitors</a></li>
+                    {% for category in categories %}
+                        <li><a href="{% url 'products' category %}">{{category|capfirst|replace_filter}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="slider">

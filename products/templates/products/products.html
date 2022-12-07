@@ -108,11 +108,15 @@
         </div>
 
         <div class="products-right-wrapper">
-            <h3>Gaming</h3>
-            <div class="total-results">{{page_start_index}}-{{page_end_index}} of {{total_results}} total results for <span>Gaming</span></div>
+            {% if word %}
+            <div class="total-results">{{page_start_index}}-{{page_end_index}} of {{total_results}} total results for <span>{{word}}</span></div>
+            {% else %}
+            <div class="total-results">{{page_start_index}}-{{page_end_index}} of {{total_results}} total results for <span>{{category}}</span></div>
+            {% endif %}
+            
             <div class="products-right">
                 
-                {% for product in object_list %}
+                {% for product in page_obj %}
                 <div class="single-product">
                     <a href="{% url 'single-product' product.category product.pk %}"><img src="{{product.img.url}}" alt=""></a>
                     <div class="single-product-info">
@@ -138,25 +142,59 @@
             <div class="pages-wrapper-main">
                 <ul class="pages-wrapper">
 
-                    <li><a href="?page=1" id="page-btn">1</a></li>
+                    {% if word %}
 
-                    {% if page_obj.has_previous and page_obj.previous_page_number != 1 %}
-                        
-                        <li><a href="?page={{page_obj.previous_page_number}}" id="page-btn">{{page_obj.previous_page_number}}</a></li>
+                        <li><a href="?search={{word}}&page=1" id="page-btn">1</a></li>
+
+                        {% if page_obj.has_previous and page_obj.previous_page_number != 1 %}
+                            
+                            <li><a href="?search={{word}}&page={{page_obj.previous_page_number}}" id="page-btn">{{page_obj.previous_page_number}}</a></li>
+
+                        {% endif %}
+
+                        {% if page_obj.has_previous and page_obj.has_next %}
+                            <li><a href="?search={{word}}&page={{page_obj.number}}" id="page-btn">{{page_obj.number}}</a></li>
+                        {% endif %}
+
+                        {% if page_obj.has_next and page_obj.next_page_number != page_obj.paginator.num_pages %}
+
+                            <li><a href="?search={{word}}&page={{page_obj.next_page_number}}" id="page-btn">{{page_obj.next_page_number}}</a></li>
+
+                        {% endif %}
+
+                        {% if page_obj.paginator.num_pages > 1 %}
+
+                            <li><a href="?search={{word}}&page={{page_obj.paginator.num_pages}}" id="page-btn">{{page_obj.paginator.num_pages}}</a></li>
+                            
+                        {% endif %}
+
+                    {% else %}
+
+                        <li><a href="?page=1" id="page-btn">1</a></li>
+
+                        {% if page_obj.has_previous and page_obj.previous_page_number != 1 %}
+                            
+                            <li><a href="?page={{page_obj.previous_page_number}}" id="page-btn">{{page_obj.previous_page_number}}</a></li>
+
+                        {% endif %}
+
+                        {% if page_obj.has_previous and page_obj.has_next %}
+                            <li><a href="?page={{page_obj.number}}" id="page-btn">{{page_obj.number}}</a></li>
+                        {% endif %}
+
+                        {% if page_obj.has_next and page_obj.next_page_number != page_obj.paginator.num_pages %}
+
+                            <li><a href="?page={{page_obj.next_page_number}}" id="page-btn">{{page_obj.next_page_number}}</a></li>
+
+                        {% endif %}
+
+                        {% if page_obj.paginator.num_pages > 1 %}
+
+                            <li><a href="?page={{page_obj.paginator.num_pages}}" id="page-btn">{{page_obj.paginator.num_pages}}</a></li>
+
+                        {% endif %}
 
                     {% endif %}
-
-                    {% if page_obj.has_previous and page_obj.has_next %}
-                        <li><a href="?page={{page_obj.number}}" id="page-btn">{{page_obj.number}}</a></li>
-                    {% endif %}
-
-                    {% if page_obj.has_next and page_obj.next_page_number != page_obj.paginator.num_pages %}
-
-                        <li><a href="?page={{page_obj.next_page_number}}" id="page-btn">{{page_obj.next_page_number}}</a></li>
-
-                    {% endif %}
-
-                    <li><a href="?page={{page_obj.paginator.num_pages}}" id="page-btn">{{page_obj.paginator.num_pages}}</a></li>
 
 
                     {% comment %} <li><a href="" style="pointer-events: none;">...</a></li> {% endcomment %}

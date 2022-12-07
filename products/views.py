@@ -1,13 +1,20 @@
 from django.shortcuts import render
 from django.views import generic as views
 from .models import Products
+from django.core.paginator import Paginator
+
 
 MAIN_ORDER_CRITERIA = 'date_created'
 PRODUCTS_PAGE_PAGINATION = 6
 SINGLE_PRODUCT_SIMILAR_ITEAM_AMOUNT = 4
 
 def home(request):
-    return render(request, 'products/home.html')
+    categories = [x[0] for x in Products.CATEGORIES]
+    print(categories)
+    context = {
+        'categories': categories
+    }
+    return render(request, 'products/home.html', context)
 
 
 class ProductsListView(views.ListView):
@@ -24,6 +31,7 @@ class ProductsListView(views.ListView):
         context = super().get_context_data(**kwargs)
         products = Products.objects.filter(category=self.category).order_by(MAIN_ORDER_CRITERIA)
         total_results = products.count()
+        context['category'] = self.category[0].upper() + self.category[1:]
         context['total_results'] = total_results
         context['pagination_number'] = self.paginate_by
         context['page_start_index'] = int(self.page_at) * self.paginate_by - self.paginate_by + 1
@@ -53,12 +61,22 @@ class SingleProductView(views.ListView):
         return context
 
 def search(request):
-    word = request.POST['search']
-    page_at = request.GET.get('page', 1)
+    word = request.GET['search']
+    page_at = int(request.GET.get('page', 1))
     object_list = Products.objects.filter(name__contains=word)
+    p = Paginator(object_list, 6)
+    page_obj = p.get_page(page_at)
     total_results = len(object_list)
     pagination_number = PRODUCTS_PAGE_PAGINATION
     page_start_index = int(page_at) * PRODUCTS_PAGE_PAGINATION - PRODUCTS_PAGE_PAGINATION + 1
     page_end_index = int(page_at) * PRODUCTS_PAGE_PAGINATION if int(page_at) * PRODUCTS_PAGE_PAGINATION < total_results else total_results
-    context = {'object_list': object_list, 'total_results': total_results, 'pagination_number': pagination_number, 'page_start_index': page_start_index, 'page_end_index': page_end_index}
+    context = {
+        'object_list': object_list, 
+        'total_results': total_results, 
+        'pagination_number': pagination_number, 
+        'page_start_index': page_start_index, 
+        'page_end_index': page_end_index,
+        'page_obj': page_obj,
+        'word': word
+    }
     return render(request, 'products/products.html', context)
