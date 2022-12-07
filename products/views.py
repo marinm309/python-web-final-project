@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.views import generic as views
 from .models import Products
 
+MAIN_ORDER_CRITERIA = 'date_created'
+PRODUCTS_PAGE_PAGINATION = 6
+SINGLE_PRODUCT_SIMILAR_ITEAM_AMOUNT = 4
+
 def home(request):
     return render(request, 'products/home.html')
 
@@ -13,12 +17,12 @@ class ProductsListView(views.ListView):
 
     def get_queryset(self):
         self.category = self.kwargs['category']
-        queryset =  Products.objects.filter(category=self.category).order_by('date_created')
+        queryset =  Products.objects.filter(category=self.category).order_by(MAIN_ORDER_CRITERIA)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        products = Products.objects.filter(category=self.category).order_by('date_created')
+        products = Products.objects.filter(category=self.category).order_by(MAIN_ORDER_CRITERIA)
         total_results = products.count()
         context['total_results'] = total_results
         context['pagination_number'] = self.paginate_by
@@ -45,5 +49,12 @@ class SingleProductView(views.ListView):
         product = Products.objects.get(pk=self.pk)
         same_cat_products = Products.objects.filter(category=self.category).order_by('?').exclude(pk=product.pk)
         context['product'] = product
-        context['same_cat_products'] = same_cat_products[:5]
+        context['same_cat_products'] = same_cat_products[:SINGLE_PRODUCT_SIMILAR_ITEAM_AMOUNT]
         return context
+
+def search(request, keyword):
+    if request.method == 'POST':
+        word = request.POST['search']
+        print(word)
+    context = {}
+    return render(request, 'products/products.html', context)

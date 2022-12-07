@@ -1150,7 +1150,3 @@ footer{
     cursor: pointer;
     display: inline-block;
 }
-
-.checkbox-filter-li label, input{
-    cursor: pointer;
-}

@@ -25,14 +25,19 @@
             <h1><a href="{% url 'home' %}">Ecommerce</a></h1>
         </div>
         <div class="search">
-            <form action="" method="GET" id="search-form">
-                <input type="text" id="search-field" placeholder="Search...">
+            <form action="{% url 'search' 5 %}" method="POST" id="search-form">
+                {% csrf_token %}
+                <input type="text" id="search-field" placeholder="Search..." name="search">
                 <input type="submit" value="&#xf002;">
             </form>
         </div>
         <div class="cart-login">
             <ul>
-                <li style="font-size: 20px;"><a href="">Sign in</a></li>
+                {% if user.is_authenticated %}
+                    <li style="font-size: 20px;"><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li style="font-size: 20px;"><a href="{% url 'login' %}">Sign in</a></li>
+                {% endif %}
                 <li>
                     <a href="">
                         <div class="cart">
