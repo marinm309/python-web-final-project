@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views import generic as views
-from .models import Products
+from .models import Products, Order, OrderItem
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+import json
 
 
 MAIN_ORDER_CRITERIA = 'date_created'
@@ -80,3 +82,53 @@ def search(request):
         'word': word
     }
     return render(request, 'products/products.html', context)
+
+def cart(request):
+    user = request.user
+    if user.is_authenticated:
+        customer = user.customer
+        order, created = Order.objects.get_or_create(customer=customer, completed=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+    total_items = sum(map(lambda x :x.quantity, items))
+    total_price = sum(map(lambda x :x.product.price * x.quantity, items))
+
+    context = {
+        'items': items,
+        'total_items': total_items,
+        'total_price': total_price
+        }
+    return render(request, 'products/cart.html', context)
+
+def update_item(request):
+    data = json.loads(request.body)
+    product_id = data['productId']
+    action = data['action']
+    customer = request.user.customer
+    product = Products.objects.get(pk=product_id)
+    order, created = Order.objects.get_or_create(customer=customer, completed=False)
+    order_item, created = OrderItem.objects.get_or_create(order=order, product=product)
+    if action == 'add':
+        order_item.quantity += 1
+        amount_to_add = 1
+    elif action == 'remove':
+        order_item.quantity -= 1
+        amount_to_add = -1
+
+    order_item.save()
+
+    if order_item.quantity <= 0:
+        order_item.delete()
+
+    return JsonResponse({'total_cart_items': request.cart_items, 'amount_to_add': amount_to_add}, safe=False)
+
+def delete_item(request, pk):
+    customer = request.user.customer
+    order = Order.objects.get(customer=customer)
+    item = OrderItem.objects.get(pk=pk)
+    item.delete()
+    result = OrderItem.objects.filter(order=order).values()
+    products_left = [entry for entry in result]
+
+    return JsonResponse({'total_cart_items': request.cart_items, 'products_left': products_left}, safe=False)

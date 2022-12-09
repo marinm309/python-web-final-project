@@ -38,9 +38,9 @@
                     <li style="font-size: 20px;"><a href="{% url 'login' %}">Sign in</a></li>
                 {% endif %}
                 <li>
-                    <a href="">
+                    <a href="{% url 'cart' %}">
                         <div class="cart">
-                            <p><b>3</b></p>
+                            <p id="total_cart_items_number"><b>{{request.cart_items}}</b></p>
                             <i class="fa fa-shopping-cart" style="font-size:24px;"></i>
                         </div>
                     </a>
@@ -89,9 +89,9 @@
                     <li>Cash</li>
                     <li>Card
                         <ul class="payment-img">
-                            <li><img src="" alt=""></li>
-                            <li><img src="" alt=""></li>
-                            <li></li>
+                            <li><img src="http://socialevo.net/wp-content/uploads/onlajn-potrebiteli-izsledvaniq.jpg" alt=""></li>
+                            <li><img src="https://play-lh.googleusercontent.com/DB-E7TSbWobxBzjS6IenXRXhkg2gNOM_685qcnKoPs9D6I9Y_4MdbQi9nhRvRCC9m5g" alt=""></li>
+                            <li><img src="https://betenemy.com/wp-content/uploads/paypal-new-logo.png" alt=""></li>
                             <li></li>
                         </ul>
                     </li>
@@ -101,5 +101,7 @@
     </footer>
 
     <script src="{% static 'js/searchBar.js' %}"></script>
+    
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 </body>
 </html>

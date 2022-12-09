@@ -63,4 +63,8 @@ class ShippingAddress(models.Model):
 
     def __str__(self) -> str:
         return self.address
+
+class SlidingAds(models.Model):
+    pass
+
     

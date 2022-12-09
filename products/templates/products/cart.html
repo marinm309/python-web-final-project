@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="cart-wrapper">
+        <div class="cart-left">
+            <div class="not-empty-cart-top">
+                <h6>Shopping cart</h6>
+                <p>Price</p>
+            </div>
+
+            {% for product in items %}
+
+            <div class="cart-item">
+                <div class="cart-item-img-info">
+                    <img src="{{product.product.img.url}}" alt="" class="cart-item-img">
+                    <div class="cart-item-name-q">
+                        <p class="cart-item-name">{{product.product.name}}</p>
+                        <div class="q-d">
+                            <div class="quantity-btn" id="q-btn">
+                                <p style="display: flex; gap: 5px; align-items: center; justify-content: center;">Qty: 
+                                    <span id="cart-item-q">{{product.quantity}}</span>
+                                    <span style="display: flex; flex-direction: column; gap: 5px;"> 
+                                        <i class="fa-solid fa-angle-up update-cart-btn" data-product="{{product.product.id}}" data-user="{{request.user}}" data-action="add" style="cursor: pointer;"></i>
+                                        <i class="fa-solid fa-angle-down update-cart-btn" data-product="{{product.product.id}}" data-user="{{request.user}}" data-action="remove" style="cursor: pointer;"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            |
+                            <a class="cart-delete-item-btn" href="" data-product="{{product.pk}}">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                <h5 class="cart-item-price">${{product.product.price}}</h5>
+            </div>
+
+            {% endfor %}
+
+        </div>
+        <div class="cart-right">
+            <p>Subtotal ({{total_items}} Items{{total_items|pluralize}}): <span style="font-weight: bold;">${{total_price}}</span></p>
+            <a href="">Proceed to checkout</a>
+        </div>
+    </div>
+
+{% endblock content %}
