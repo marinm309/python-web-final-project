@@ -29,7 +29,7 @@
                                 </p>
                             </div>
                             |
-                            <a class="cart-delete-item-btn" href="" data-product="{{product.pk}}">Delete</a>
+                            <a class="cart-delete-item-btn" href="" data-product="{{product.pk}}">Remove</a>
                         </div>
                     </div>
                 </div>
@@ -40,8 +40,10 @@
 
         </div>
         <div class="cart-right">
-            <p>Subtotal ({{total_items}} Items{{total_items|pluralize}}): <span style="font-weight: bold;">${{total_price}}</span></p>
-            <a href="">Proceed to checkout</a>
+            <div id="cart-totla-items-info">
+                <p>Subtotal ({{total_items}} Item{{total_items|pluralize}}): <span style="font-weight: bold;">${{total_price}}</span></p>
+            </div>
+            <a href="{% url 'checkout' %}">Proceed to checkout</a>
         </div>
     </div>
 

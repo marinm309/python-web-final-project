@@ -956,7 +956,7 @@ footer{
     margin: unset;
 }
 
-.single-product-top a, #add-to-cart-single-product{
+.single-product-top button, #add-to-cart-single-product{
     color: #fff;
     border: 1px solid white;
     padding: 5px 16px;
@@ -970,7 +970,7 @@ footer{
     transition-duration: 0.2s;
 }
 
-.single-product-top a:hover{
+.single-product-top button:hover{
     background-color: #ca8505;
 }
 

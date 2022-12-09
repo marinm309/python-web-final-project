@@ -4,9 +4,9 @@ def CartMiddleware(get_response):
     # One-time configuration and initialization.
 
     def middleware(request):
-        customer = request.user.customer
-        if customer:
-            order = Order.objects.get(customer=customer)
+        user = request.user
+        if user.is_authenticated:
+            order, created = Order.objects.get_or_create(customer=user.customer, completed=False)
             items = order.orderitem_set.all()
             total_cart_items = sum(map(lambda x :x.quantity, items))
             request.cart_items = total_cart_items

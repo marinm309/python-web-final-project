@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic as views
 from .models import Products, Order, OrderItem
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 import json
+from .forms import ShippingForm
 
 
 MAIN_ORDER_CRITERIA = 'date_created'
@@ -121,7 +122,9 @@ def update_item(request):
     if order_item.quantity <= 0:
         order_item.delete()
 
-    return JsonResponse({'total_cart_items': request.cart_items, 'amount_to_add': amount_to_add}, safe=False)
+    total_cart_price = sum(map(lambda x :x.product.price * x.quantity, order.orderitem_set.all()))
+
+    return JsonResponse({'total_cart_items': request.cart_items, 'amount_to_add': amount_to_add, 'total_cart_price': total_cart_price}, safe=False)
 
 def delete_item(request, pk):
     customer = request.user.customer
@@ -132,3 +135,30 @@ def delete_item(request, pk):
     products_left = [entry for entry in result]
 
     return JsonResponse({'total_cart_items': request.cart_items, 'products_left': products_left}, safe=False)
+
+def checkout(request):
+    customer = request.user.customer
+    order = Order.objects.get(customer=customer)
+    products = OrderItem.objects.filter(order=order)
+    total_items = sum(map(lambda x :x.quantity, products))
+    total_price = sum(map(lambda x :x.product.price * x.quantity, products))
+    if request.method == 'GET':
+        form = ShippingForm()
+    else:
+        order.completed = True
+        order.customer = None
+        order.save()
+        form = ShippingForm(request.POST)
+        if form.is_valid():
+            address = form.save(commit=False)
+            address.customer = customer
+            address.order = order
+            address.save()
+            return redirect('home')
+    context = {
+        'products': products, 
+        'total_items': total_items,
+        'total_price': total_price,
+        'form': form
+    }
+    return render(request, 'products/checkout.html', context)

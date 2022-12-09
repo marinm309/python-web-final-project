@@ -16,10 +16,13 @@ for(let i of add_btns){
             if(path === '/cart/'){
                 const element = e.target
                 const qElement = element.parentElement.parentElement.children[0]
+                const cartTotlaItemsInfo = document.getElementById('cart-totla-items-info')
                 if(action == 'add'){
                     qElement.textContent = Number(qElement.textContent) + 1
+                    cartTotlaItemsInfo.innerHTML = `<p>Subtotal (${data['total_cart_items'] + 1} Items): <span style="font-weight: bold;">${data['total_cart_price']}</span></p>`
                 }else{
                     qElement.textContent = Number(qElement.textContent) - 1
+                    cartTotlaItemsInfo.innerHTML = `<p>Subtotal (${data['total_cart_items'] - 1} Items): <span style="font-weight: bold;">${data['total_cart_price']}</span></p>`
                     if(qElement.textContent == 0){
                         window.location.reload()
                     }

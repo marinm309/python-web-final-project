@@ -1,0 +1,70 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="single-product-main-wrapper">
+    <div class="single-product-wrapper" style="width: 94%; display: flex; flex-wrap: wrap; justify-content: space-between;">
+
+        <div class="single-product-top" style="gap: 40px;">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                {% for product in products %}
+
+                    <div style="border: solid 2px #ffa500; padding: 20px; display: flex; align-items: center; border-radius: 10px;">
+                        <div class="single-product-photos">
+                            <div class="main-img" style="width: 260px; height: 160px;">
+                                <img id="single-product-main-img" src="{{product.product.img.url}}" alt="">
+                            </div>
+                        </div>
+    
+                        <div class="single-product-details">
+                            <h2 style="font-size: 20px;">{{ product.product.name }}</h2>
+                            <p>Quantity: {{product.quantity}}</p>
+                            <p>Price: ${{product.product.price}}</p>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                <div class="cart-right" style="border: solid 2px #ffa500; padding: 20px; display: flex; align-items: center; border-radius: 10px; width: 25%; align-self: flex-end;">
+                    <p>Subtotal ({{total_items}} Items{{total_items|pluralize}}): <span style="font-weight: bold;">${{total_price}}</span></p>
+                </div>
+
+            </div>
+            <div class="single-product-fast-order">
+                <form action="{% url 'checkout' %}" method="POST">
+                    {% csrf_token %}
+                    <h3>Order Details</h3>
+                        {% if not request.user %}
+
+                            {{form.name.label}}
+                            {{form.name}}
+
+                            {{form.email.label}}
+                            {{form.email}}
+
+                        {% endif %}
+
+                        {{form.country.label}}
+                        {{form.country}}
+
+                        {{form.city.label}}
+                        {{form.city}}
+
+                        {{form.zip.label}}
+                        {{form.zip}}
+
+                        {{form.address.label}}
+                        {{form.address}}
+
+                    <button id="checkout-continue-btn">Continue</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

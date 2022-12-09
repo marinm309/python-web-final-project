@@ -62,9 +62,4 @@ class ShippingAddress(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.address
-
-class SlidingAds(models.Model):
-    pass
-
-    
+        return self.address 

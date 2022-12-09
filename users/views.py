@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
 from django.views import generic as views
 from . forms import CustomAuthenticationForm, SignUpForm
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
