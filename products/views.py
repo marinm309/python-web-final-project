@@ -91,6 +91,8 @@ def cart(request):
         order, created = Order.objects.get_or_create(customer=customer, completed=False)
         items = order.orderitem_set.all()
     else:
+        cart = json.loads(request.COOKIES['cart'])
+        print(cart)
         items = []
     total_items = sum(map(lambda x :x.quantity, items))
     total_price = sum(map(lambda x :x.product.price * x.quantity, items))

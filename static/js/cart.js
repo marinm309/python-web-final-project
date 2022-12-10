@@ -1,6 +1,13 @@
 const csrftoken = getToken('csrftoken')
 const add_btns = document.getElementsByClassName('update-cart-btn')
 const del_btns = document.getElementsByClassName('cart-delete-item-btn')
+let cart = JSON.parse(getCookie('cart'))
+
+if(!cart){
+    cart = {}
+    document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
+}
+
 for(let i of add_btns){
     i.addEventListener('click', async function(e){
         e.preventDefault()
@@ -9,7 +16,7 @@ for(let i of add_btns){
         const user = this.dataset.user
         const path = window.location.pathname
         if(user === 'AnonymousUser'){
-            console.log(0)
+            addCookieItem(productId, action)
         }else{
             const data = await updateUserOrder(productId, action)
             document.getElementById('total_cart_items_number').textContent = data['total_cart_items'] + data['amount_to_add']
@@ -30,6 +37,26 @@ for(let i of add_btns){
             }
         }
     })
+}
+
+function addCookieItem(productId, action){
+    if(action == 'add'){
+        if(cart[productId] == undefined){
+            cart[productId] = {'quantity': 1}
+        }else{
+            cart[productId]['quantity'] += 1
+        }
+    }
+
+    else if(action == 'remove'){
+        cart[productId] -= 1
+        if(cart[productId][quantity] <= 0){
+            delete cart[productId]
+        }
+    }
+
+    document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
+    console.log(cart)
 }
 
 for(let i of del_btns){
@@ -93,4 +120,16 @@ function getToken(name) {
         }
     }
     return cookieValue;
+}
+
+function getCookie(name){
+    const cookieArr = document.cookie.split(';')
+
+    for(let i = 0; i < cookieArr.length; i++){
+        let cookiePair = cookieArr[i].split('=')
+        if(name == cookiePair[0].trim()){
+            return decodeURIComponent(cookiePair[1])
+        }
+    }
+    return false
 }
