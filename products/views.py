@@ -90,12 +90,35 @@ def cart(request):
         customer = user.customer
         order, created = Order.objects.get_or_create(customer=customer, completed=False)
         items = order.orderitem_set.all()
+        total_items = sum(map(lambda x :x.quantity, items))
+        total_price = sum(map(lambda x :x.product.price * x.quantity, items))
     else:
-        cart = json.loads(request.COOKIES['cart'])
-        print(cart)
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except:
+            cart = {}
         items = []
-    total_items = sum(map(lambda x :x.quantity, items))
-    total_price = sum(map(lambda x :x.product.price * x.quantity, items))
+        total_items = 0
+        total_price = 0
+        
+        for i in cart:
+            try:
+                total_items += cart[i]['quantity']
+                product = Products.objects.get(pk=i)
+                total_price += product.price * cart[i]['quantity']
+                item = {
+                    'product': {
+                        'id': product.id,
+                        'name': product.name,
+                        'price': product.price,
+                        'img': product.img
+                    },
+                    'quantity': cart[i]['quantity'],
+                }
+                items.append(item)
+            except:
+                pass
+
 
     context = {
         'items': items,
@@ -139,11 +162,39 @@ def delete_item(request, pk):
     return JsonResponse({'total_cart_items': request.cart_items, 'products_left': products_left}, safe=False)
 
 def checkout(request):
-    customer = request.user.customer
-    order = Order.objects.get(customer=customer)
-    products = OrderItem.objects.filter(order=order)
-    total_items = sum(map(lambda x :x.quantity, products))
-    total_price = sum(map(lambda x :x.product.price * x.quantity, products))
+    user = request.user
+    if user.is_authenticated:
+        customer = request.user.customer
+        order = Order.objects.get(customer=customer)
+        products = OrderItem.objects.filter(order=order)
+        total_items = sum(map(lambda x :x.quantity, products))
+        total_price = sum(map(lambda x :x.product.price * x.quantity, products))
+    else:
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except:
+            cart = {}
+        products = []
+        total_items = 0
+        total_price = 0
+        
+        for i in cart:
+            try:
+                total_items += cart[i]['quantity']
+                product = Products.objects.get(pk=i)
+                total_price += product.price * cart[i]['quantity']
+                item = {
+                    'product': {
+                        'id': product.id,
+                        'name': product.name,
+                        'price': product.price,
+                        'img': product.img
+                    },
+                    'quantity': cart[i]['quantity'],
+                }
+                products.append(item)
+            except:
+                pass
     if request.method == 'GET':
         form = ShippingForm()
     else:

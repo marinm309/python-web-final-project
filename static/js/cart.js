@@ -49,14 +49,14 @@ function addCookieItem(productId, action){
     }
 
     else if(action == 'remove'){
-        cart[productId] -= 1
-        if(cart[productId][quantity] <= 0){
+        cart[productId]['quantity'] -= 1
+        if(cart[productId]['quantity'] <= 0){
             delete cart[productId]
         }
     }
 
     document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
-    console.log(cart)
+    window.location.reload()
 }
 
 for(let i of del_btns){
