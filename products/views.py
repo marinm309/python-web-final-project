@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 import json
 from .forms import ShippingForm
+from . utils import cart_details
 
 
 MAIN_ORDER_CRITERIA = 'date_created'
@@ -84,49 +85,6 @@ def search(request):
     }
     return render(request, 'products/products.html', context)
 
-def cart(request):
-    user = request.user
-    if user.is_authenticated:
-        customer = user.customer
-        order, created = Order.objects.get_or_create(customer=customer, completed=False)
-        items = order.orderitem_set.all()
-        total_items = sum(map(lambda x :x.quantity, items))
-        total_price = sum(map(lambda x :x.product.price * x.quantity, items))
-    else:
-        try:
-            cart = json.loads(request.COOKIES['cart'])
-        except:
-            cart = {}
-        items = []
-        total_items = 0
-        total_price = 0
-        
-        for i in cart:
-            try:
-                total_items += cart[i]['quantity']
-                product = Products.objects.get(pk=i)
-                total_price += product.price * cart[i]['quantity']
-                item = {
-                    'product': {
-                        'id': product.id,
-                        'name': product.name,
-                        'price': product.price,
-                        'img': product.img
-                    },
-                    'quantity': cart[i]['quantity'],
-                }
-                items.append(item)
-            except:
-                pass
-
-
-    context = {
-        'items': items,
-        'total_items': total_items,
-        'total_price': total_price
-        }
-    return render(request, 'products/cart.html', context)
-
 def update_item(request):
     data = json.loads(request.body)
     product_id = data['productId']
@@ -162,39 +120,13 @@ def delete_item(request, pk):
     return JsonResponse({'total_cart_items': request.cart_items, 'products_left': products_left}, safe=False)
 
 def checkout(request):
-    user = request.user
-    if user.is_authenticated:
-        customer = request.user.customer
-        order = Order.objects.get(customer=customer)
-        products = OrderItem.objects.filter(order=order)
-        total_items = sum(map(lambda x :x.quantity, products))
-        total_price = sum(map(lambda x :x.product.price * x.quantity, products))
-    else:
-        try:
-            cart = json.loads(request.COOKIES['cart'])
-        except:
-            cart = {}
-        products = []
-        total_items = 0
-        total_price = 0
-        
-        for i in cart:
-            try:
-                total_items += cart[i]['quantity']
-                product = Products.objects.get(pk=i)
-                total_price += product.price * cart[i]['quantity']
-                item = {
-                    'product': {
-                        'id': product.id,
-                        'name': product.name,
-                        'price': product.price,
-                        'img': product.img
-                    },
-                    'quantity': cart[i]['quantity'],
-                }
-                products.append(item)
-            except:
-                pass
+    context_data = cart_details(request)
+    items = context_data['items']
+    total_items = context_data['total_items']
+    total_price = context_data['total_price']
+    order = context_data['order']
+    customer = context_data['customer']
+
     if request.method == 'GET':
         form = ShippingForm()
     else:
@@ -209,9 +141,22 @@ def checkout(request):
             address.save()
             return redirect('home')
     context = {
-        'products': products, 
+        'items': items, 
         'total_items': total_items,
         'total_price': total_price,
         'form': form
     }
     return render(request, 'products/checkout.html', context)
+
+def cart(request):
+    context_data = cart_details(request)
+    items = context_data['items']
+    total_items = context_data['total_items']
+    total_price = context_data['total_price']
+
+    context = {
+        'items': items,
+        'total_items': total_items,
+        'total_price': total_price
+        }
+    return render(request, 'products/cart.html', context)
