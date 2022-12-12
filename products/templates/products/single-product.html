@@ -43,35 +43,8 @@
                     {% if product.producer %}
                     <p class="producer">By {{product.producer}}</p>
                     {% endif %}
-                    <div class="single-product-rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-regular fa-star-half-stroke"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <p class="total-votes"> 17,856</p>
-                    </div>
                     <p class="single-product-price">${{product.price}}</p>
-                    <a href="">Add to Cart</a>
-                    <p class="delivery">Delivery <span class="day">Wednesday</span> 31.08</p>
-                </div>
-    
-                <div class="single-product-fast-order">
-                    <form action="">
-                        <h3>Fast Order</h3>
-                        <label for="">First Name</label>
-                        <input type="text">
-                        <label for="">Last Name</label>
-                        <input type="text">
-                        <label for="">E-mail</label>
-                        <input type="text">
-                        <label for="">Phone Number</label>
-                        <input type="text">
-                        <input type="text" placeholder="Country">
-                        <input type="text" placeholder="City">
-                        <a href="">Order</a>
-                        <p class="delivery">Delivery <span class="day">Wednesday</span> 31.08</p>
-                    </form>
+                    <a class="update-cart-btn" data-product="{{product.id}}" data-user="{{request.user}}" data-action="add" href="">Add to Cart</a>
                 </div>
     
             </div>
