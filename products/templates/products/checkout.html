@@ -33,7 +33,7 @@
 
             </div>
             <div class="single-product-fast-order">
-                <form action="{% url 'checkout' %}" method="POST">
+                <form action="{% url 'checkout' %}" method="POST" id="checkoutForm">
                     {% csrf_token %}
                     <h3>Order Details</h3>
 
@@ -61,7 +61,8 @@
                         {{form.address.label}}
                         {{form.address}}
 
-                    <button id="checkout-continue-btn">Continue</button>
+                    <div id="paypal-button-container"></div>
+                    {% comment %} <button id="checkout-continue-btn">Continue</button> {% endcomment %}
                 </form>
             </div>
 
@@ -69,5 +70,50 @@
 
     </div>
 </div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AWjIQZRQEyCayCQZpVxsCgCPkV3dSUz8ozu__UVw9AZ2GAelNTA2wt1SgSR9_KC7WvBHpsPSnMK3yhh8&currency=USD"></script>
+
+    <script>
+        const total = '{{total_price}}'
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+            style:{
+                color:  'blue',
+                shape:  'pill',
+                label:  'pay',
+            },
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: parseFloat(total).toFixed(2)
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(orderData) {
+                    // Successful capture! For demo purposes:
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                    
+                    document.getElementById("checkoutForm").submit()
+
+                    // Replace the above to show a success message within this page, e.g.
+                    // const element = document.getElementById('paypal-button-container');
+                    // element.innerHTML = '';
+                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+    </script>
 
 {% endblock content %}
