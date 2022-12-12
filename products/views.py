@@ -6,8 +6,10 @@ from django.http import JsonResponse
 import json
 from .forms import ShippingForm
 from . utils import cart_details
+from users.models import Customer
+from django.contrib.auth import get_user_model
 
-
+UserModel = get_user_model()
 MAIN_ORDER_CRITERIA = 'date_created'
 PRODUCTS_PAGE_PAGINATION = 6
 SINGLE_PRODUCT_SIMILAR_ITEAM_AMOUNT = 4
@@ -119,35 +121,6 @@ def delete_item(request, pk):
 
     return JsonResponse({'total_cart_items': request.cart_items, 'products_left': products_left}, safe=False)
 
-def checkout(request):
-    context_data = cart_details(request)
-    items = context_data['items']
-    total_items = context_data['total_items']
-    total_price = context_data['total_price']
-    order = context_data['order']
-    customer = context_data['customer']
-
-    if request.method == 'GET':
-        form = ShippingForm()
-    else:
-        order.completed = True
-        order.customer = None
-        order.save()
-        form = ShippingForm(request.POST)
-        if form.is_valid():
-            address = form.save(commit=False)
-            address.customer = customer
-            address.order = order
-            address.save()
-            return redirect('home')
-    context = {
-        'items': items, 
-        'total_items': total_items,
-        'total_price': total_price,
-        'form': form
-    }
-    return render(request, 'products/checkout.html', context)
-
 def cart(request):
     context_data = cart_details(request)
     items = context_data['items']
@@ -160,3 +133,56 @@ def cart(request):
         'total_price': total_price
         }
     return render(request, 'products/cart.html', context)
+
+def checkout(request):
+    context_data = cart_details(request)
+    items = context_data['items']
+    total_items = context_data['total_items']
+    total_price = context_data['total_price']
+    order = context_data['order']
+    customer = context_data['customer']
+
+    if request.method == 'GET':
+        form = ShippingForm()
+    else:
+        if request.user.is_authenticated:
+            order.completed = True
+            order.customer = None
+            order.save()
+            form = ShippingForm(request.POST)
+            if form.is_valid():
+                address = form.save(commit=False)
+                address.customer = customer
+                address.order = order
+                address.save()
+                return redirect('home')
+        else:
+            form = ShippingForm(request.POST)
+            name = request.POST['name']
+            email = request.POST['email']
+            user, user_created = UserModel.objects.get_or_create(email=email)
+            customer, customer_created = Customer.objects.get_or_create(user=user)
+            customer.name = name
+            customer.save()
+            if form.is_valid():
+                order = Order.objects.create(completed=True)
+                address = form.save(commit=False)
+                address.customer = customer
+                address.order = order
+                address.save()
+                for item in items:
+                    product = Products.objects.get(pk=item['product']['id'])
+                    OrderItem.objects.create(order=order, product=product, quantity=item['quantity'])
+                response = redirect('home')
+                response.delete_cookie('cart')
+                return response
+
+
+    context = {
+        'items': items, 
+        'total_items': total_items,
+        'total_price': total_price,
+        'form': form
+    }
+    return render(request, 'products/checkout.html', context)
+
