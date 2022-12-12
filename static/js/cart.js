@@ -26,7 +26,7 @@ for(let i of add_btns){
         const user = this.dataset.user
         const path = window.location.pathname
         if(user === 'AnonymousUser'){
-            addCookieItem(productId, action)
+            addCookieItem(productId, action, e)
         }else{
             const data = await updateUserOrder(productId, action)
             document.getElementById('total_cart_items_number').textContent = data['total_cart_items'] + data['amount_to_add']
@@ -49,12 +49,18 @@ for(let i of add_btns){
     })
 }
 
-function addCookieItem(productId, action){
+function addCookieItem(productId, action, event){
+    let path = window.location.pathname
+
     if(action == 'add'){
         if(cart[productId] == undefined){
             cart[productId] = {'quantity': 1}
         }else{
             cart[productId]['quantity'] += 1
+        }
+        document.getElementById('total_cart_items_number').textContent = Number(document.getElementById('total_cart_items_number').textContent) + 1
+        if(path == '/cart/'){
+            event.target.parentElement.parentElement.children[0].textContent = Number(event.target.parentElement.parentElement.children[0].textContent) + 1
         }
     }
 
@@ -62,18 +68,30 @@ function addCookieItem(productId, action){
         cart[productId]['quantity'] -= 1
         if(cart[productId]['quantity'] <= 0){
             delete cart[productId]
+            window.location.reload()
+        }
+        document.getElementById('total_cart_items_number').textContent = Number(document.getElementById('total_cart_items_number').textContent) - 1
+        if(path == '/cart/'){
+            event.target.parentElement.parentElement.children[0].textContent = Number(event.target.parentElement.parentElement.children[0].textContent) - 1
         }
     }
 
+    else if(action == 'delete'){
+        delete cart[productId]
+    }
+
     document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
-    window.location.reload()
 }
 
 for(let i of del_btns){
     i.addEventListener('click', async function(e){
         e.preventDefault()
         const productId = this.dataset.product
-        await deleteOrderItem(productId)
+        if(userCookie != 'AnonymousUser'){
+            await deleteOrderItem(productId)
+        }else{
+            addCookieItem(productId, 'delete', e)
+        }
         window.location.reload()
     })
 }
