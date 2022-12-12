@@ -88,6 +88,7 @@ for(let i of del_btns){
         e.preventDefault()
         const productId = this.dataset.product
         if(userCookie != 'AnonymousUser'){
+            console.log(userCookie)
             await deleteOrderItem(productId)
         }else{
             addCookieItem(productId, 'delete', e)

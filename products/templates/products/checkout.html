@@ -61,8 +61,9 @@
                         {{form.address.label}}
                         {{form.address}}
 
-                    <div id="paypal-button-container"></div>
-                    {% comment %} <button id="checkout-continue-btn">Continue</button> {% endcomment %}
+                    <button id="checkout-continue-btn" style="display: block;">Continue</button>
+
+                    <div id="paypal-button-container" style="display: none;"></div>
                 </form>
             </div>
 
@@ -111,9 +112,32 @@
                     // Or go to another URL:  actions.redirect('thank_you.html');
                 });
             }
-
-
         }).render('#paypal-button-container');
+
+        const continueBtn = document.getElementById('checkout-continue-btn')
+        continueBtn.addEventListener('click', onSubmit)
+
+        function onSubmit(e){
+            e.preventDefault()
+            isFormValid = getCookie('checkoutFormValidation')
+            console.log(isFormValid)
+            if(isFormValid == 'ok'){
+                document.getElementById('paypal-button-container').style.display = 'block'
+            }
+        }
+
+        function getCookie(name){
+        const cookieArr = document.cookie.split(';')
+
+        for(let i = 0; i < cookieArr.length; i++){
+            let cookiePair = cookieArr[i].split('=')
+            if(name == cookiePair[0].trim()){
+                return decodeURIComponent(cookiePair[1])
+            }
+        }
+        return false
+    }
+
     </script>
 
 {% endblock content %}

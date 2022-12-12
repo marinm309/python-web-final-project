@@ -112,9 +112,11 @@ def update_item(request):
     return JsonResponse({'total_cart_items': request.cart_items, 'amount_to_add': amount_to_add, 'total_cart_price': total_cart_price}, safe=False)
 
 def delete_item(request, pk):
+    print(pk)
     customer = request.user.customer
     order = Order.objects.get(customer=customer)
-    item = OrderItem.objects.get(pk=pk)
+    product = Products.objects.get(pk=pk)
+    item = OrderItem.objects.get(product=product, order=order)
     item.delete()
     result = OrderItem.objects.filter(order=order).values()
     products_left = [entry for entry in result]
@@ -178,6 +180,7 @@ def checkout(request):
                     OrderItem.objects.create(order=order, product=product, quantity=item['quantity'])
                 response = redirect('home')
                 response.delete_cookie('cart')
+                response.set_cookie('checkoutFormValidation', 'ok')
                 return response
 
 
