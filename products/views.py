@@ -143,7 +143,10 @@ def checkout(request):
     customer = context_data['customer']
 
     if request.method == 'GET':
-        form = ShippingForm()
+        if request.user.is_authenticated:
+            form = ShippingForm(initial={'name': 'Marin Marinov', 'email': 'marinm309@abv.bg'})
+        else:
+            form = ShippingForm()
     else:
         if request.user.is_authenticated:
             order.completed = True

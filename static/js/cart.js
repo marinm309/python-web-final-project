@@ -2,6 +2,16 @@ const csrftoken = getToken('csrftoken')
 const add_btns = document.getElementsByClassName('update-cart-btn')
 const del_btns = document.getElementsByClassName('cart-delete-item-btn')
 let cart = JSON.parse(getCookie('cart'))
+let userCookie = getCookie('user')
+
+
+
+if(userCookie != 'AnonymousUser'){
+    const fields = document.getElementsByClassName('hide')
+    for(let i of fields){
+        i.style.display = 'none'
+    }
+}
 
 if(!cart){
     cart = {}

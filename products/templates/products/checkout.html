@@ -36,15 +36,18 @@
                 <form action="{% url 'checkout' %}" method="POST">
                     {% csrf_token %}
                     <h3>Order Details</h3>
+
                         {% if not request.user.is_authenticated %}
-
-                            {{form.name.label}}
-                            {{form.name}}
-
-                            {{form.email.label}}
-                            {{form.email}}
-
+                        {{form.name.label}}
                         {% endif %}
+                        {{form.name}}
+
+                        {% if not request.user.is_authenticated %}
+                        {{form.email.label}}
+                        {% endif %}
+                        {{form.email}}
+
+
 
                         {{form.country.label}}
                         {{form.country}}

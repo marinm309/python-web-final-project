@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'products.middlewares.CartMiddleware',
+    'products.middlewares.UserCookieMiddleware',
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'

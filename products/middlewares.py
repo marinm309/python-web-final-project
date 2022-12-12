@@ -31,3 +31,16 @@ def CartMiddleware(get_response):
         return response
 
     return middleware
+
+def UserCookieMiddleware(get_response):
+
+    def middleware(request):
+        user = request.user
+
+        response = get_response(request)
+
+        response.set_cookie('user', user)
+
+        return response
+
+    return middleware
