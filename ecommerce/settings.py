@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'cart.apps.CartConfig',
     'products.apps.ProductsConfig',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -158,3 +159,17 @@ AUTH_USER_MODEL = 'users.AppUser'
 
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
+
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_S3_FILE_OVERWRITE = False
+
+AWS_ACCESS_KEY_ID = 'AKIA5ZZDO5KFR3BYCEGA'
+
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_STORAGE_BUCKET_NAME = 'soft-uni-final-project'
