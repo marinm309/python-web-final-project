@@ -205,3 +205,5 @@ def create_product(request):
     context = {'form': form}
     return render(request, 'products/create_product.html', context)
 
+def info(request):
+    return render(request, 'products/info.html')
