@@ -212,7 +212,7 @@ nav input[type=submit]{
 }
 
 .slick-slide img{
-    height: 300px;
+    height: 400px;
     object-fit: cover;
     overflow: hidden;
     vertical-align: middle;

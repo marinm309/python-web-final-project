@@ -62,4 +62,10 @@ class ShippingAddress(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.address 
+        return self.address
+
+
+class SlidingAdds(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    img = models.ImageField(upload_to='products')

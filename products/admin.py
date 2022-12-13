@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Products, Order, OrderItem, ShippingAddress
+from . models import Products, Order, OrderItem, ShippingAddress, SlidingAdds
 
 
 @admin.register(Order)
@@ -22,4 +22,6 @@ class OrderInfoAdmin(admin.ModelAdmin):
 class OrderInfoAdmin(admin.ModelAdmin):
     list_display = ('customer', 'country', 'city', 'zip', 'address')
     list_filter = ('order', )
+
+admin.site.register(SlidingAdds)
 

@@ -24,8 +24,9 @@
                 </ul>
             </div>
             <div class="slider">
-                <div class="item"><a href=""><img src="https://i.ytimg.com/vi/dip_8dmrcaU/maxresdefault.jpg" alt=""></a></div>
-                <div class="item"><a href=""><img src="https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg" alt=""></a></div>
+                {% for img in sliding_ads %}
+                    <div class="item"><a href="{% url 'single-product' img.product.category img.product.pk %}"><img src="{{img.img.url}}" alt=""></a></div>
+                {% endfor %}
             </div>
         </section>
         <section>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import generic as views
-from .models import Products, Order, OrderItem, ShippingAddress
+from .models import Products, Order, OrderItem, ShippingAddress, SlidingAdds
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 import json
@@ -16,10 +16,11 @@ PRODUCTS_PAGE_PAGINATION = 6
 SINGLE_PRODUCT_SIMILAR_ITEAM_AMOUNT = 4
 
 def home(request):
+    sliding_ads = SlidingAdds.objects.all()
     categories = [x[0] for x in Products.CATEGORIES]
-    print(categories)
     context = {
-        'categories': categories
+        'categories': categories,
+        'sliding_ads': sliding_ads
     }
     return render(request, 'products/home.html', context)
 
