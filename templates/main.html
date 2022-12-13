@@ -37,7 +37,7 @@
                     <li style="font-size: 20px;"><a href="{% url 'orders-status' %}"><i class="fa-solid fa-list-check"></i></a></li>
                     <li style="font-size: 20px;"><a href="{% url 'create-product' %}"><i class="fa-solid fa-square-plus"></i></a></li>
                 {% endif %}
-                    <li style="font-size: 20px;"><a href=""><i class="fa-regular fa-user"></i></a></li>
+                    <li style="font-size: 20px;"><a href="{% url 'profile' %}"><i class="fa-regular fa-user"></i></a></li>
                     <li style="font-size: 20px;"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i></a></li>
                 {% else %}
                     <li style="font-size: 20px;"><a href="{% url 'login' %}">Sign in</a></li>

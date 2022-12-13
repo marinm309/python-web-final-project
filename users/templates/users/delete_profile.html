@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="single-product-main-wrapper">
+    <div class="single-product-wrapper">
+
+        <div class="single-product-top" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+
+            <div class="single-product-details" style="margin: 0 auto;">
+                <h2>{{customer.name}}</h2>
+                <h3>{{customer.user.email}}</h3>
+                <h1 style="background-color: brown; padding: 10px; border-radius: 10px;">ARE YOU SURE YOU WANT TO DELETE</h1>
+                <a href="{% url 'profile' %}" style="background-color: lightgreen;">NO</a>
+                <a href="{% url 'delete-profile-final' %}" style="background-color: brown;">YES</a>
+            </div>
+
+        </div>
+
+        <div class="single-product-bottom" style="text-align: center;">
+            <h3>Ordered Products</h3>
+            <div class="single-product-similar" style="margin: 0 auto; justify-content: space-evenly; display: flex;">
+                
+                {% for p in products %}
+                <div class="single-product similar">
+                    <a href="{% url 'single-product' p.category p.pk %}"><img src="{{p.img.url}}" alt=""></a>
+                    <div class="single-product-info">
+                        <a href="{% url 'single-product' p.category p.pk %}"><p class="single-product-name">{{p.name}}</p></a>
+                        {% if p.producer %}
+                        <p class="producer">By {{p.producer}}</p>
+                        {% endif %}
+                        <p class="single-product-price">${{p.price}}</p>
+                    </div>
+                </div>
+                {% endfor %}  
+                
+                {% if not products %}
+                <h1>No products yet</h1>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}
