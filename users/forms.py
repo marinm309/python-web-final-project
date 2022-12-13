@@ -1,4 +1,4 @@
-from django.forms import PasswordInput, TextInput, CharField
+from django.forms import PasswordInput, TextInput, CharField, ModelForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UsernameField, UserCreationForm
 from . models import Customer
@@ -39,4 +39,14 @@ class SignUpForm(UserCreationForm):
             customer.save()
 
         return user
+
+class CustomerForm(ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['name', ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({"autocomplete": "current-password", 'class': 'form-control form-control-lg'})
     

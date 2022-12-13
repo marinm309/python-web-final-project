@@ -1,11 +1,13 @@
 from django.views import generic as views
-from . forms import CustomAuthenticationForm, SignUpForm
+from . forms import CustomAuthenticationForm, SignUpForm, CustomerForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from products.models import ShippingAddress, Order, Products
+from django.contrib.auth.decorators import login_required
+from . models import Customer
 
 
 UserModel = get_user_model()
@@ -29,7 +31,7 @@ class UserCreationView(views.CreateView):
 class UserLogoutView(LogoutView):
     pass
 
-
+@login_required(login_url='login')
 def profile(request):
     user = request.user
     customer = user.customer
@@ -43,9 +45,25 @@ def profile(request):
     }
     return render(request, 'users/profile.html', context)
 
-def edit_profile(request):
-    pass
 
+@login_required(login_url='login')
+def edit_profile(request):
+    user = request.user
+    customer = Customer.objects.get(user=user)
+    if request.method == 'GET':
+        form = CustomerForm(instance=customer)
+    else:
+        form = CustomerForm(request.POST, instance=customer)
+        if form.is_valid():
+            customer = form.save(commit=False)
+            customer.save()
+            return redirect('profile')
+
+    context = {'form': form}
+    return render(request, 'users/edit_profile.html', context)
+
+
+@login_required(login_url='login')
 def delete_profile(request):
     user = request.user
     customer = user.customer
@@ -59,6 +77,8 @@ def delete_profile(request):
     }
     return render(request, 'users/delete_profile.html', context)
 
+
+@login_required(login_url='login')
 def delete_profile_final(request):
     user = request.user
     customer = user.customer

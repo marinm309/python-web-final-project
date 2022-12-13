@@ -12,7 +12,7 @@
             <div class="single-product-details" style="margin: 0 auto;">
                 <h2>{{customer.name}}</h2>
                 <h3>{{customer.user.email}}</h3>
-                <a href="" style="background-color: lightgreen;">EDIT</a>
+                <a href="{% url 'edit-profile' %}" style="background-color: lightgreen;">EDIT</a>
                 <a href="{% url 'delete-profile' %}" style="background-color: brown;">DELETE</a>
             </div>
 
