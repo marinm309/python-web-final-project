@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import generic as views
-from .models import Products, Order, OrderItem
+from .models import Products, Order, OrderItem, ShippingAddress
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 import json
@@ -207,3 +207,15 @@ def create_product(request):
 
 def info(request):
     return render(request, 'products/info.html')
+
+class OrdersStatusListView(views.ListView):
+    model = ShippingAddress
+    template_name = 'products/orders_status.html'
+
+
+def delete_order(request, pk):
+    order = Order.objects.get(pk=pk)
+    address = ShippingAddress.objects.get(order=order)
+    order.delete()
+    address.delete()
+    return redirect('orders-status')

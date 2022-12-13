@@ -34,6 +34,7 @@
             <ul>
                 {% if user.is_authenticated %}
                 {% if user.is_staff or user.is_superuser %}
+                    <li style="font-size: 20px;"><a href="{% url 'orders-status' %}"><i class="fa-solid fa-list-check"></i></a></li>
                     <li style="font-size: 20px;"><a href="{% url 'create-product' %}"><i class="fa-solid fa-square-plus"></i></a></li>
                 {% endif %}
                     <li style="font-size: 20px;"><a href=""><i class="fa-regular fa-user"></i></a></li>

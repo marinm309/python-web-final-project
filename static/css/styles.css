@@ -332,6 +332,7 @@ div.draggable{
 }
 
 footer{
+    transform: translateY(calc(100vh - 150%));
     background-color: #131921;
     color: #fff;
 }

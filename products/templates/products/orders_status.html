@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="single-product" style="width: 94%; margin: 0 auto; height: auto; margin-top: 20px;">
+    {% for address in object_list %}
+    <div class="single-product-info" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+        <p style="margin: 0;">{{address.id}}</p>
+        <p style="margin: 0;">{{address.country}}</p>
+        <p style="margin: 0;">{{address.city}}</p>
+        <p style="margin: 0;">{{address.zip}}</p>
+        <p style="margin: 0;">{{address.address}}</p>
+        <a href="{% url 'delete-order' address.order %}">Done</a>
+    </div>
+    <hr style="color: black; height: 3px; width: 100%;">
+    {% endfor %}
+</div>
+
+{% endblock content %}
