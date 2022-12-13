@@ -28,6 +28,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', 'python-web-final-project-production.up.railway.app', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = ['https://python-web-final-project-production.up.railway.app']
+
 
 # Application definition
 
