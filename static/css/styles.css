@@ -674,7 +674,7 @@ footer{
     padding: 20px;
 }
 
-.cart-right a{
+.cart-right a, .cart-right button{
     background-color: #ffa500;
     color: black;
     padding: 10px;

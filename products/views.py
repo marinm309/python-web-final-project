@@ -137,10 +137,13 @@ def cart(request):
         }
     return render(request, 'products/cart.html', context)
 
+
 def checkout(request):
     context_data = cart_details(request)
     items = context_data['items']
     total_items = context_data['total_items']
+    if total_items == 0:
+        return redirect('home')
     total_price = context_data['total_price']
     order = context_data['order']
     customer = context_data['customer']
@@ -212,7 +215,7 @@ class OrdersStatusListView(views.ListView):
     model = ShippingAddress
     template_name = 'products/orders_status.html'
 
-
+@staff_member_required(login_url='login')
 def delete_order(request, pk):
     order = Order.objects.get(pk=pk)
     address = ShippingAddress.objects.get(order=order)

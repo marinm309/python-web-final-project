@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.admin.views.decorators import staff_member_required
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -12,6 +13,6 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
     path('create_product', views.create_product, name='create-product'),
     path('info', views.info, name='info'),
-    path('orders_status', views.OrdersStatusListView.as_view(), name='orders-status'),
+    path('orders_status', staff_member_required(views.OrdersStatusListView.as_view(), login_url='login'), name='orders-status'),
     path('delete_order/<str:pk>/', views.delete_order, name='delete-order'),
 ]

@@ -43,7 +43,11 @@
             <div id="cart-totla-items-info">
                 <p>Subtotal ({{total_items}} Item{{total_items|pluralize}}): <span style="font-weight: bold;">${{total_price}}</span></p>
             </div>
+            {% if total_items != 0 %}
             <a href="{% url 'checkout' %}">Proceed to checkout</a>
+            {% else %}
+            <button disabled>Your cart is empty</button>
+            {% endif %}
         </div>
     </div>
 
