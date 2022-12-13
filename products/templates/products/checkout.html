@@ -123,31 +123,37 @@
             const data = Object.fromEntries(formData)
             
             if(!data['name']){
+                document.getElementById('paypal-button-container').style.display = 'none'
                 document.querySelector('#id_name').style.border = '2px solid red'
             }else{
                 document.querySelector('#id_name').style.border = '2px solid #ce8806'
             }
             if(!data['email'] || !validateEmail(data['email'])){
+                document.getElementById('paypal-button-container').style.display = 'none'
                 document.querySelector('#id_email').style.border = '2px solid red'
             }else{
                 document.querySelector('#id_email').style.border = '2px solid #ce8806'
             }
             if(!data['country']){
+                document.getElementById('paypal-button-container').style.display = 'none'
                 document.querySelector('#id_country').style.border = '2px solid red'
             }else{
                 document.querySelector('#id_country').style.border = '2px solid #ce8806'
             }
             if(!data['city']){
+                document.getElementById('paypal-button-container').style.display = 'none'
                 document.querySelector('#id_city').style.border = '2px solid red'
             }else{
                 document.querySelector('#id_city').style.border = '2px solid #ce8806'
             }
             if(!data['zip']){
+                document.getElementById('paypal-button-container').style.display = 'none'
                 document.querySelector('#id_zip').style.border = '2px solid red'
             }else{
                 document.querySelector('#id_zip').style.border = '2px solid #ce8806'
             }
             if(!data['address']){
+                document.getElementById('paypal-button-container').style.display = 'none'
                 document.querySelector('#id_address').style.border = '2px solid red'
             }else{
                 document.querySelector('#id_address').style.border = '2px solid #ce8806'
