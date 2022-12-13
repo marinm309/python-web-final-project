@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-27ankb+ke9aaky6=@cgq$!ps7(adxgqlfk^q!%rr--ff(e(1@a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'python-web-final-project-production.up.railway.app']
+ALLOWED_HOSTS = ['localhost', 'python-web-final-project-production.up.railway.app', '127.0.0.1']
 
 
 # Application definition
@@ -47,6 +47,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
