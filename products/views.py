@@ -138,7 +138,6 @@ def cart(request):
     return render(request, 'products/cart.html', context)
 
 def checkout(request):
-    print(request.method)
     context_data = cart_details(request)
     items = context_data['items']
     total_items = context_data['total_items']

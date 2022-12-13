@@ -29,4 +29,6 @@ class AppUserAdmin(UserAdmin):
     )
 
 
-admin.site.register(Customer)
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'user')
