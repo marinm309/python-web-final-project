@@ -4,10 +4,11 @@ from .models import Products, Order, OrderItem
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 import json
-from .forms import ShippingForm
+from .forms import ShippingForm, ProductForm
 from . utils import cart_details
 from users.models import Customer
 from django.contrib.auth import get_user_model
+from django.contrib.admin.views.decorators import staff_member_required
 
 UserModel = get_user_model()
 MAIN_ORDER_CRITERIA = 'date_created'
@@ -137,6 +138,7 @@ def cart(request):
     return render(request, 'products/cart.html', context)
 
 def checkout(request):
+    print(request.method)
     context_data = cart_details(request)
     items = context_data['items']
     total_items = context_data['total_items']
@@ -180,9 +182,7 @@ def checkout(request):
                     OrderItem.objects.create(order=order, product=product, quantity=item['quantity'])
                 response = redirect('home')
                 response.delete_cookie('cart')
-                response.set_cookie('checkoutFormValidation', 'ok')
                 return response
-
 
     context = {
         'items': items, 
@@ -191,4 +191,18 @@ def checkout(request):
         'form': form
     }
     return render(request, 'products/checkout.html', context)
+
+
+@staff_member_required(login_url='login')
+def create_product(request):
+    if request.method == 'GET':
+        form = ProductForm()
+    else:
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'products/create_product.html', context)
 

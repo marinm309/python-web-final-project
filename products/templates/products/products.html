@@ -23,14 +23,6 @@
                         {% if product.producer %}
                         <p class="producer">By {{product.producer}}</p>
                         {% endif %}
-                        <div class="single-product-rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-regular fa-star-half-stroke"></i>
-                            <i class="fa-regular fa-star"></i>
-                            <p class="total-votes"> 17,856</p>
-                        </div>
                         <p class="single-product-price">${{product.price}}</p>
                         <a id="add-to-cart-single-product" class="update-cart-btn" data-product="{{product.id}}" data-user="{{request.user}}" data-action="add" href="">Add to Cart</a>
                         {% comment %} <a href="" class="platform">Nintendo</a> {% endcomment %}

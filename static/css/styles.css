@@ -60,7 +60,7 @@ nav form{
 }
 
 nav input[type=text]{
-    width: 90%;
+    width: 100%;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border: none;
@@ -99,7 +99,7 @@ nav input[type=submit]{
 .search{
     margin: 0;
     padding: 0;
-    width: 1500px;
+    width: 800px;
 }
 
 .cart-login{
@@ -734,7 +734,7 @@ footer{
 .products-right{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .single-product{
@@ -959,7 +959,7 @@ footer{
     margin: unset;
 }
 
-.single-product-top a, #add-to-cart-single-product{
+.single-product-top a, #add-to-cart-single-product, .single-product-top button{
     color: #fff;
     border: 1px solid white;
     padding: 5px 16px;
@@ -973,7 +973,7 @@ footer{
     transition-duration: 0.2s;
 }
 
-.single-product-top a:hover, #add-to-cart-single-product:hover{
+.single-product-top a:hover, #add-to-cart-single-product:hover, .single-product-top button:hover{
     background-color: #ca8505;
 }
 
