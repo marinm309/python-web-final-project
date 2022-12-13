@@ -61,7 +61,6 @@ class SingleProductView(views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        self.get_queryset()
         product = Products.objects.get(pk=self.pk)
         same_cat_products = Products.objects.filter(category=self.category).order_by('?').exclude(pk=product.pk)
         context['product'] = product
@@ -114,7 +113,6 @@ def update_item(request):
     return JsonResponse({'total_cart_items': request.cart_items, 'amount_to_add': amount_to_add, 'total_cart_price': total_cart_price}, safe=False)
 
 def delete_item(request, pk):
-    print(pk)
     customer = request.user.customer
     order = Order.objects.get(customer=customer)
     product = Products.objects.get(pk=pk)
