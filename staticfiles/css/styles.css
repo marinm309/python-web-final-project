@@ -336,6 +336,7 @@ footer{
     background-color: #131921;
     color: #fff;
     z-index: -5;
+    position: relative;
 }
 
 .footer-nav-wrapper{
