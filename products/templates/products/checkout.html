@@ -11,7 +11,7 @@
             <div style="display: flex; flex-direction: column; gap: 15px;">
                 {% for product in items %}
 
-                    <div style="border: solid 2px #ffa500; padding: 20px; display: flex; align-items: center; border-radius: 10px;">
+                    <div class="checkout-single-product" style="border: solid 2px #ffa500; padding: 20px; display: flex; align-items: center; border-radius: 10px;">
                         <div class="single-product-photos">
                             <div class="main-img" style="width: 260px; height: 160px;">
                                 <img id="single-product-main-img" src="{{product.product.img.url}}" alt="">
