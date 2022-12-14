@@ -1085,7 +1085,7 @@ footer{
         height: 180px;
     }
 
-    .single-product-info p:nth-child(1){
+    .orders p:nth-child(1){
         display: none;
     }
 }
@@ -1103,7 +1103,7 @@ footer{
         height: 200px;
     }
 
-    .single-product-info p:nth-child(6){
+    .orders p:nth-child(6){
         display: none;
     }
 }
@@ -1204,7 +1204,7 @@ footer{
         font-size: 20px;
     }
 
-    .single-product-info a{
+    .orders a{
         display: none;
     }
 }
@@ -1244,7 +1244,7 @@ footer{
         font-size: 16px;
     }
 
-    .single-product-info p:nth-child(3){
+    .orders p:nth-child(3){
         display: none;
     }
 
