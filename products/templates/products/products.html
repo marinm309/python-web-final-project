@@ -7,10 +7,18 @@
     <div class="products-wrapper">
 
         <div class="products-right-wrapper">
-            {% if word %}
-            <div class="total-results">{{page_start_index}}-{{page_end_index}} of {{total_results}} total results for <span>{{word}}</span></div>
+            {% if page_end_index == 0 %}
+                {% if word %}
+                <div class="total-results">0-{{page_end_index}} of {{total_results}} total results for <span>{{word}}</span></div>
+                {% else %}
+                <div class="total-results">0-{{page_end_index}} of {{total_results}} total results for <span>{{category}}</span></div>
+                {% endif %}
             {% else %}
-            <div class="total-results">{{page_start_index}}-{{page_end_index}} of {{total_results}} total results for <span>{{category}}</span></div>
+                {% if word %}
+                <div class="total-results">{{page_start_index}}-{{page_end_index}} of {{total_results}} total results for <span>{{word}}</span></div>
+                {% else %}
+                <div class="total-results">{{page_start_index}}-{{page_end_index}} of {{total_results}} total results for <span>{{category}}</span></div>
+                {% endif %}
             {% endif %}
             
             <div class="products-right">

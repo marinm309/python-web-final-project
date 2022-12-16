@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Products, Order, OrderItem, ShippingAddress, SlidingAdds
+from . models import Products, Order, OrderItem, ShippingAddress, SlidingAdds, SmallAds
 
 
 @admin.register(Order)
@@ -24,4 +24,4 @@ class OrderInfoAdmin(admin.ModelAdmin):
     list_filter = ('order', )
 
 admin.site.register(SlidingAdds)
-
+admin.site.register(SmallAds)

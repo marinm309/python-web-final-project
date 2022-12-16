@@ -42,8 +42,7 @@
             </div>
             <div class="slider">
                 {% for img in sliding_ads %}
-                <div class="item"><a href="{% url 'single-product' img.product.category img.product.pk %}"><img
-                            src="{{img.img.url}}" alt=""></a></div>
+                <div class="item"><a href="{% url 'single-product' img.product.category img.product.pk %}"><img src="{{img.img.url}}" alt=""></a></div>
                 {% endfor %}
             </div>
         </section>
@@ -57,18 +56,9 @@
         </section>
         <section>
             <div class="big-adds">
-                <div class="big-adds-img"><a href=""><img
-                            src="https://cdn.ozone.bg/media/description/o/s/os_mid_mid_new_940x440_play_it_smart_new_0622_9933.jpg"
-                            alt=""></a></div>
-                <div class="big-adds-img"><a href=""><img
-                            src="https://cdn.ozone.bg/media/description/p/s/ps5_complekt_os_mid_mid_new_0522_5545.jpg"
-                            alt=""></a></div>
-                <div class="big-adds-img"><a href=""><img
-                            src="https://cdn.ozone.bg/media/description/o/s/os_mid_mid_educa_promo_0622_6086.jpg"
-                            alt=""></a></div>
-                <div class="big-adds-img"><a href=""><img
-                            src="https://cdn.ozone.bg/media/description/e/_/e_knigi_mid_mid_1121_1_2305.jpg" alt=""></a>
-                </div>
+                {% for add in small_ads %}
+                    <div class="big-adds-img"><a href="products/search/?search={{add.filter_word}}"><img src="{{add.img.url}}" alt=""></a></div>
+                {% endfor %}
             </div>
         </section>
         <section>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import generic as views
-from .models import Products, Order, OrderItem, ShippingAddress, SlidingAdds
+from .models import Products, Order, OrderItem, ShippingAddress, SlidingAdds, SmallAds
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 import json
@@ -12,15 +12,17 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 UserModel = get_user_model()
 MAIN_ORDER_CRITERIA = 'date_created'
-PRODUCTS_PAGE_PAGINATION = 6
+PRODUCTS_PAGE_PAGINATION = 8
 SINGLE_PRODUCT_SIMILAR_ITEAM_AMOUNT = 4
 
 def home(request):
     sliding_ads = SlidingAdds.objects.all()
     categories = [x[0] for x in Products.CATEGORIES]
+    small_ads = SmallAds.objects.all()
     context = {
         'categories': categories,
-        'sliding_ads': sliding_ads
+        'sliding_ads': sliding_ads,
+        'small_ads': small_ads
     }
     return render(request, 'products/home.html', context)
 
@@ -70,8 +72,8 @@ class SingleProductView(views.ListView):
 def search(request):
     word = request.GET['search']
     page_at = int(request.GET.get('page', 1))
-    object_list = Products.objects.filter(name__contains=word)
-    p = Paginator(object_list, 6)
+    object_list = Products.objects.filter(name__icontains=word)
+    p = Paginator(object_list, PRODUCTS_PAGE_PAGINATION)
     page_obj = p.get_page(page_at)
     total_results = len(object_list)
     pagination_number = PRODUCTS_PAGE_PAGINATION

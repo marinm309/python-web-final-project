@@ -70,6 +70,11 @@ class SlidingAdds(models.Model):
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
     img = models.ImageField(upload_to='products')
 
-class SmallAds(models.Model):
-    pass
 
+class SmallAds(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    filter_word = models.CharField(max_length=50)
+    img = models.ImageField(upload_to='products')
+
+    def __str__(self) -> str:
+        return self.filter_word
