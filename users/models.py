@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import AppUserManager
 import uuid
+from django.core.validators import MinLengthValidator
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
@@ -14,7 +15,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 class Customer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(AppUser, null=False, blank=False, on_delete=models.CASCADE)
-    name = models.CharField(null=False, blank=False, max_length=50)
+    name = models.CharField(null=False, blank=False, max_length=50, validators=[MinLengthValidator(5)])
 
     def __str__(self) -> str:
         return self.name

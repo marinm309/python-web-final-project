@@ -31,15 +31,7 @@
                       <h2 class="fw-bold mb-2 text-uppercase"><a class="login-logo" href="{% url 'home' %}">ECOMMERCE</a></h2>
                       <p class="text-white-50 mb-5">Please enter your email and password!</p>
         
-                      <div class="form-outline form-white mb-4">
-                        {{form.username}}
-                        <label class="form-label" for="typeEmailX">Email</label>
-                      </div>
-        
-                      <div class="form-outline form-white mb-4">
-                        {{form.password}}
-                        <label class="form-label" for="typePasswordX">Password</label>
-                      </div>
+                      {{form}}
         
                       <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
 

@@ -1,12 +1,29 @@
 {% extends 'main.html' %}
-    
-    {% load static %}
-    {% load replace_filter %}
-    
 
-    {% block content %}
-    
+{% load static %}
+{% load replace_filter %}
+
+
+{% block content %}
+
     <main class="home-page-wrapper">
+
+        {% if messages %}
+{% for message in messages %}
+{% if message.tags == 'error' %}
+<ul class="messages"
+    style="border: 2px solid red; display: block; padding: 5px; background-color: white; margin: 0 auto; width: 40%; text-align: center;">
+    {% elif message.tags == 'success' %}
+    <ul class="messages"
+        style="border: 2px solid green; display: block; padding: 5px; background-color: white; margin: 0 auto; width: 40%; text-align: center;">
+        {% endif %}
+        {% endfor %}
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %} style="font-size: 18px;">{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+
         <section class="home-menu-wrapper">
             <h3>Categories</h3>
             <ul class="home-menu">
@@ -19,13 +36,14 @@
             <div>
                 <ul class="all-cat">
                     {% for category in categories %}
-                        <li><a href="{% url 'products' category %}">{{category|capfirst|replace_filter}}</a></li>
+                    <li><a href="{% url 'products' category %}">{{category|capfirst|replace_filter}}</a></li>
                     {% endfor %}
                 </ul>
             </div>
             <div class="slider">
                 {% for img in sliding_ads %}
-                    <div class="item"><a href="{% url 'single-product' img.product.category img.product.pk %}"><img src="{{img.img.url}}" alt=""></a></div>
+                <div class="item"><a href="{% url 'single-product' img.product.category img.product.pk %}"><img
+                            src="{{img.img.url}}" alt=""></a></div>
                 {% endfor %}
             </div>
         </section>
@@ -39,10 +57,18 @@
         </section>
         <section>
             <div class="big-adds">
-                <div class="big-adds-img"><a href=""><img src="https://cdn.ozone.bg/media/description/o/s/os_mid_mid_new_940x440_play_it_smart_new_0622_9933.jpg" alt=""></a></div>
-                <div class="big-adds-img"><a href=""><img src="https://cdn.ozone.bg/media/description/p/s/ps5_complekt_os_mid_mid_new_0522_5545.jpg" alt=""></a></div>
-                <div class="big-adds-img"><a href=""><img src="https://cdn.ozone.bg/media/description/o/s/os_mid_mid_educa_promo_0622_6086.jpg" alt=""></a></div>
-                <div class="big-adds-img"><a href=""><img src="https://cdn.ozone.bg/media/description/e/_/e_knigi_mid_mid_1121_1_2305.jpg" alt=""></a></div>
+                <div class="big-adds-img"><a href=""><img
+                            src="https://cdn.ozone.bg/media/description/o/s/os_mid_mid_new_940x440_play_it_smart_new_0622_9933.jpg"
+                            alt=""></a></div>
+                <div class="big-adds-img"><a href=""><img
+                            src="https://cdn.ozone.bg/media/description/p/s/ps5_complekt_os_mid_mid_new_0522_5545.jpg"
+                            alt=""></a></div>
+                <div class="big-adds-img"><a href=""><img
+                            src="https://cdn.ozone.bg/media/description/o/s/os_mid_mid_educa_promo_0622_6086.jpg"
+                            alt=""></a></div>
+                <div class="big-adds-img"><a href=""><img
+                            src="https://cdn.ozone.bg/media/description/e/_/e_knigi_mid_mid_1121_1_2305.jpg" alt=""></a>
+                </div>
             </div>
         </section>
         <section>
@@ -59,12 +85,20 @@
                     </ul>
                 </div>
                 <div class="add-single-product-img">
-                    <div class="item1"><a href=""><img src="https://cdn.ozone.bg/media/description/o/s/os_widget_big_445x536_04_razer_6630.jpg" alt=""></a></div>
-                    <div class="item2"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Pafi/OS_Widget_Mid_354_268_01_new.jpg" alt=""></a></div>
-                    <div class="item3"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mouse_2.jpg" alt=""></a></div>
-                    <div class="item4"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/keyboard_2.jpg" alt=""></a></div>
-                    <div class="item5"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/headphones_2.jpg" alt=""></a></div>
-                    <div class="item6"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mousepad_2.jpg" alt=""></a></div>
+                    <div class="item1"><a href=""><img
+                                src="https://cdn.ozone.bg/media/description/o/s/os_widget_big_445x536_04_razer_6630.jpg"
+                                alt=""></a></div>
+                    <div class="item2"><a href=""><img
+                                src="https://cdn.ozone.bg/media/wysiwyg/Pafi/OS_Widget_Mid_354_268_01_new.jpg"
+                                alt=""></a></div>
+                    <div class="item3"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mouse_2.jpg"
+                                alt=""></a></div>
+                    <div class="item4"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/keyboard_2.jpg"
+                                alt=""></a></div>
+                    <div class="item5"><a href=""><img
+                                src="https://cdn.ozone.bg/media/wysiwyg/Homepage/headphones_2.jpg" alt=""></a></div>
+                    <div class="item6"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mousepad_2.jpg"
+                                alt=""></a></div>
                 </div>
             </div>
             <div class="add-single-product">
@@ -80,12 +114,20 @@
                     </ul>
                 </div>
                 <div class="add-single-product-img">
-                    <div class="item1"><a href=""><img src="https://cdn.ozone.bg/media/description/o/s/os_widget_big_445x536_04_razer_6630.jpg" alt=""></a></div>
-                    <div class="item2"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Pafi/OS_Widget_Mid_354_268_01_new.jpg" alt=""></a></div>
-                    <div class="item3"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mouse_2.jpg" alt=""></a></div>
-                    <div class="item4"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/keyboard_2.jpg" alt=""></a></div>
-                    <div class="item5"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/headphones_2.jpg" alt=""></a></div>
-                    <div class="item6"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mousepad_2.jpg" alt=""></a></div>
+                    <div class="item1"><a href=""><img
+                                src="https://cdn.ozone.bg/media/description/o/s/os_widget_big_445x536_04_razer_6630.jpg"
+                                alt=""></a></div>
+                    <div class="item2"><a href=""><img
+                                src="https://cdn.ozone.bg/media/wysiwyg/Pafi/OS_Widget_Mid_354_268_01_new.jpg"
+                                alt=""></a></div>
+                    <div class="item3"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mouse_2.jpg"
+                                alt=""></a></div>
+                    <div class="item4"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/keyboard_2.jpg"
+                                alt=""></a></div>
+                    <div class="item5"><a href=""><img
+                                src="https://cdn.ozone.bg/media/wysiwyg/Homepage/headphones_2.jpg" alt=""></a></div>
+                    <div class="item6"><a href=""><img src="https://cdn.ozone.bg/media/wysiwyg/Homepage/mousepad_2.jpg"
+                                alt=""></a></div>
                 </div>
             </div>
         </section>

@@ -22,13 +22,17 @@ for(let i of add_btns){
     i.addEventListener('click', async function(e){
         e.preventDefault()
         const productId = this.dataset.product
+        const price = this.dataset.price
         const action = this.dataset.action
         const user = this.dataset.user
         const path = window.location.pathname
         if(user === 'AnonymousUser'){
-            addCookieItem(productId, action, e)
+            addCookieItem(productId, price, action, e)
         }else{
             const data = await updateUserOrder(productId, action)
+            if(action == 'add' && path != '/cart/'){
+                alert('Item Added Successfuly!')
+            }
             document.getElementById('total_cart_items_number').textContent = data['total_cart_items'] + data['amount_to_add']
             if(path === '/cart/'){
                 const element = e.target
@@ -49,18 +53,26 @@ for(let i of add_btns){
     })
 }
 
-function addCookieItem(productId, action, event){
+function addCookieItem(productId, price, action, event){
     let path = window.location.pathname
 
     if(action == 'add'){
         if(cart[productId] == undefined){
-            cart[productId] = {'quantity': 1}
+            alert('Item Added Successfuly!')
+            cart[productId] = {'quantity': 1, 'price': price}
         }else{
             cart[productId]['quantity'] += 1
         }
         document.getElementById('total_cart_items_number').textContent = Number(document.getElementById('total_cart_items_number').textContent) + 1
         if(path == '/cart/'){
             event.target.parentElement.parentElement.children[0].textContent = Number(event.target.parentElement.parentElement.children[0].textContent) + 1
+            let totalPrice = 0
+            let totalItems = 0
+            for(let i in cart){
+                totalPrice += Number(cart[i]['quantity']) * Number(cart[i]['price'])
+                totalItems += Number(cart[i]['quantity'])
+            }
+            document.getElementById('cart-totla-items-info').innerHTML = `<p>Subtotal (${totalItems} Items): <span style="font-weight: bold;">${totalPrice.toFixed(2)}</span></p>`
         }
     }
 
@@ -73,6 +85,13 @@ function addCookieItem(productId, action, event){
         document.getElementById('total_cart_items_number').textContent = Number(document.getElementById('total_cart_items_number').textContent) - 1
         if(path == '/cart/'){
             event.target.parentElement.parentElement.children[0].textContent = Number(event.target.parentElement.parentElement.children[0].textContent) - 1
+            let totalPrice = 0
+            let totalItems = 0
+            for(let i in cart){
+                totalPrice += Number(cart[i]['quantity']) * Number(cart[i]['price'])
+                totalItems += Number(cart[i]['quantity'])
+            }
+            document.getElementById('cart-totla-items-info').innerHTML = `<p>Subtotal (${totalItems} Items): <span style="font-weight: bold;">${totalPrice.toFixed(2)}</span></p>`
         }
     }
 
@@ -91,7 +110,7 @@ for(let i of del_btns){
             console.log(userCookie)
             await deleteOrderItem(productId)
         }else{
-            addCookieItem(productId, 'delete', e)
+            addCookieItem(productId, undefined, 'delete', e)
         }
         window.location.reload()
     })

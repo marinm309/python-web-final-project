@@ -44,7 +44,7 @@
                     <p class="producer">By {{product.producer}}</p>
                     {% endif %}
                     <p class="single-product-price">${{product.price}}</p>
-                    <a class="update-cart-btn" data-product="{{product.id}}" data-user="{{request.user}}" data-action="add" href="">Add to Cart</a>
+                    <a class="update-cart-btn" data-product="{{product.id}}" data-user="{{request.user}}" data-action="add" data-price="{{product.price}}" href="">Add to Cart</a>
                 </div>
     
             </div>

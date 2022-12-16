@@ -28,7 +28,7 @@
                 {% endfor %}
 
                 <div class="cart-right" style="border: solid 2px #ffa500; padding: 20px; display: flex; align-items: center; border-radius: 10px; width: 25%; align-self: flex-end;">
-                    <p>Subtotal ({{total_items}} Items{{total_items|pluralize}}): <span style="font-weight: bold;">${{total_price}}</span></p>
+                    <p>Subtotal ({{total_items}} Items{{total_items|pluralize}}): <span style="font-weight: bold;">${{total_price|floatformat:2}}</span></p>
                 </div>
 
             </div>

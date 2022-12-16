@@ -1259,3 +1259,7 @@ footer{
         width: unset !important;
     }
 }
+
+.btn-outline-light{
+    margin-top: 25px !important;
+}

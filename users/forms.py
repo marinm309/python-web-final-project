@@ -20,7 +20,7 @@ class CustomAuthenticationForm(AuthenticationForm):
         self.fields['password'].label = 'Password'
 
 class SignUpForm(UserCreationForm):
-    name = CharField(max_length=50)
+    name = CharField(max_length=50, min_length=5)
     class Meta:
         model = UserModel
         fields = (UserModel.USERNAME_FIELD, )

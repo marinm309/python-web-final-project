@@ -23,8 +23,8 @@
                                 <p style="display: flex; gap: 5px; align-items: center; justify-content: center;">Qty: 
                                     <span id="cart-item-q">{{product.quantity}}</span>
                                     <span style="display: flex; flex-direction: column; gap: 5px;"> 
-                                        <i class="fa-solid fa-angle-up update-cart-btn" data-product="{{product.product.id}}" data-user="{{request.user}}" data-action="add" style="cursor: pointer;"></i>
-                                        <i class="fa-solid fa-angle-down update-cart-btn" data-product="{{product.product.id}}" data-user="{{request.user}}" data-action="remove" style="cursor: pointer;"></i>
+                                        <i class="fa-solid fa-angle-up update-cart-btn" data-product="{{product.product.id}}" data-user="{{request.user}}" data-action="add" data-price="{{product.product.price}}" style="cursor: pointer;"></i>
+                                        <i class="fa-solid fa-angle-down update-cart-btn" data-product="{{product.product.id}}" data-user="{{request.user}}" data-action="remove" data-price="{{product.product.price}}" style="cursor: pointer;"></i>
                                     </span>
                                 </p>
                             </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="cart-right">
             <div id="cart-totla-items-info">
-                <p>Subtotal ({{total_items}} Item{{total_items|pluralize}}): <span style="font-weight: bold;">${{total_price}}</span></p>
+                <p>Subtotal ({{total_items}} Item{{total_items|pluralize}}): <span style="font-weight: bold;">${{total_price|floatformat:2}}</span></p>
             </div>
             {% if total_items != 0 %}
             <a href="{% url 'checkout' %}">Proceed to checkout</a>
