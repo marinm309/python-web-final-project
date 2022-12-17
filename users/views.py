@@ -46,7 +46,6 @@ def profile(request):
     for i in order_items:
         for j in i:
             new_order_item.append(j)
-    print(new_order_item)
     products = {x.product for x in new_order_item} if order_items else ''
     context = {
         'customer': customer,
@@ -79,7 +78,11 @@ def delete_profile(request):
     address = ShippingAddress.objects.filter(customer=customer)
     orders = [x.order for x in address] if address else ''
     order_items = [x.orderitem_set.all() for x in orders] if orders else ''
-    products = [x.product for x in order_items[0]] if order_items else ''
+    new_order_item = []
+    for i in order_items:
+        for j in i:
+            new_order_item.append(j)
+    products = {x.product for x in new_order_item} if order_items else ''
     context = {
         'customer': customer,
         'products': products
