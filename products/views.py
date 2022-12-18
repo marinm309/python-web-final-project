@@ -151,7 +151,7 @@ def checkout(request):
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            form = ShippingForm(initial={'name': 'Marin Marinov', 'email': 'marinm309@abv.bg'})
+            form = ShippingForm(initial={'name': f'{customer.name}', 'email': f'{customer.user.email}'})
         else:
             form = ShippingForm()
     else:
