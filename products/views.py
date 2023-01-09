@@ -34,12 +34,31 @@ class ProductsListView(views.ListView):
 
     def get_queryset(self):
         self.category = self.kwargs['category']
-        queryset =  Products.objects.filter(category=self.category).order_by(MAIN_ORDER_CRITERIA)
+        if self.category == 'newest':
+            queryset = Products.objects.all().order_by(MAIN_ORDER_CRITERIA)
+        elif self.category == 'hot':
+            order_items = OrderItem.objects.all().order_by('product')
+            order_items_count_dict = {}
+            for i in order_items:
+                product_name = i.product.name
+                if product_name not in order_items_count_dict.keys():
+                    order_items_count_dict[product_name] = 0
+                order_items_count_dict[product_name] += i.quantity
+            order_items_count_dict = dict(sorted(order_items_count_dict.items(), key=lambda item: -item[1]))
+            order_items_lst = order_items_count_dict.keys()
+            queryset = Products.objects.filter(name__in=order_items_lst)
+        else:
+            queryset =  Products.objects.filter(category=self.category).order_by(MAIN_ORDER_CRITERIA)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        products = Products.objects.filter(category=self.category).order_by(MAIN_ORDER_CRITERIA)
+        if self.category == 'newest':
+            products = Products.objects.all().order_by(MAIN_ORDER_CRITERIA)
+        elif self.category == 'hot':
+            products = self.get_queryset()
+        else:
+            products = Products.objects.filter(category=self.category).order_by(MAIN_ORDER_CRITERIA)
         total_results = products.count()
         context['category'] = self.category[0].upper() + self.category[1:]
         context['total_results'] = total_results

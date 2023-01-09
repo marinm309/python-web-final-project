@@ -27,9 +27,9 @@
         <section class="home-menu-wrapper">
             <h3>Categories</h3>
             <ul class="home-menu">
-                <li><a href="">Newest</a></li>
-                <li><a href="">On sale</a></li>
-                <li><a href="">Hot</a></li>
+                <li><a href="{% url 'products' "newest" %}">Newest</a></li>
+                <li><a href="{% url 'products' "sale" %}">On sale</a></li>
+                <li><a href="{% url 'products' "hot" %}">Hot</a></li>
             </ul>
         </section>
         <section class="add">
