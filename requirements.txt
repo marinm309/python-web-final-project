@@ -1,7 +1,7 @@
 altgraph==0.17.4
 annotated-types==0.6.0
 anyio==3.7.1
-asgiref==3.5.2
+asgiref==3.8.1
 attrs==24.2.0
 auto-py-to-exe==2.44.1
 boto3==1.26.29
